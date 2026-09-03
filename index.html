@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>செந்தூர் முருகன் ஃபைனான்ஸ் | Senthoor Murugan Finance</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Tamil",sans-serif;background:#fff9e8;color:#241600}
+:root{--y:#ffd21c;--r:#d71920;--dark:#250707;--red2:#a8070c}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#210303,#7e0909 55%,#ffd21c)}
+.loginbox{width:min(430px,92%);background:#fff;border-radius:22px;padding:30px;box-shadow:0 20px 60px #0008;text-align:center}
+.brand{font-weight:900;color:var(--r);font-size:25px}.brand span{display:block;color:#111;font-size:17px;margin-top:5px}
+input,select,textarea,button{font:inherit}input,select,textarea{width:100%;padding:11px;border:1px solid #d9c8a0;border-radius:9px;margin:5px 0 12px;background:#fff}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:var(--r);color:#fff}.yellow{background:var(--y);color:#221500}.danger{background:#9b0000;color:#fff}.muted{background:#eee}
+header{height:68px;background:linear-gradient(90deg,#300303,#9e080c);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 14px;position:sticky;top:0;z-index:30}
+.headerLeft{position:absolute;left:12px;display:flex;align-items:center;gap:8px}
+.headerRight{position:absolute;right:12px;display:flex;align-items:center;gap:7px}
+.menuBtn{display:none;background:#ffd21c;color:#210404;font-size:25px;line-height:1;padding:7px 12px;border-radius:10px;box-shadow:0 3px 10px #0004}
+.dashboardLang{display:flex;justify-content:center;gap:5px;margin:-8px 0 14px}
+.langBtn{padding:5px 11px;border-radius:20px;background:#eee;border:1px solid #ddd;font-size:12px}
+.langBtn.active{background:#ffd21c;color:#240000;border-color:#e1b900}
+header .brand{color:#ffd21c}header .brand span{color:#fff;font-size:13px}
+.layout{display:flex;min-height:calc(100vh - 68px)}
+aside{width:235px;background:#210404;color:#fff;padding:15px;position:fixed;top:68px;bottom:0;overflow:auto;z-index:15;transition:.25s}
+.menuBtn{display:none;background:#ffd21c;color:#210404;font-size:25px;padding:6px 11px;border-radius:10px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.menuOverlay{display:none;position:fixed;inset:68px 0 0 0;background:#0008;z-index:14}
+.dashboardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dashboardBox{background:#fff;border:1px solid #ead9a8;border-radius:22px;padding:20px;min-height:125px;box-shadow:0 8px 24px #5b180c12;position:relative;overflow:hidden}
+.dashboardBox:before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:#d71920}
+.dashboardBox .label{font-size:16px}.dashboardBox .value{font-size:29px;font-weight:900;margin-top:8px}
+.overdue{border:2px solid #d71920!important;background:#fff0f0!important}
+.okdue{border:2px solid #d9c8a0!important}
+.statusOver{background:#d71920;color:#fff;padding:5px 9px;border-radius:20px;font-weight:800}
+.statusOk{background:#ffe36d;color:#241600;padding:5px 9px;border-radius:20px;font-weight:800}
+aside button{display:block;width:100%;text-align:left;margin:6px 0;background:#3d1111;color:#fff}aside button.active,aside button:hover{background:var(--y);color:#210404}
+main{margin-left:235px;width:calc(100% - 235px);padding:20px}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.card{background:#fff;border:1px solid #ecdcae;border-radius:15px;padding:18px;box-shadow:0 5px 18px #5b180c12}.stat{border-top:5px solid var(--r)}.stat b{font-size:25px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.toolbar>*{width:auto!important;margin:0}.tablewrap{overflow:auto;background:#fff;border-radius:12px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #eadfca;text-align:left;white-space:nowrap}th{background:#fff0b3}.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center}.modal.show{display:flex}.modalbox{background:#fff;width:min(760px,94%);max-height:90vh;overflow:auto;border-radius:18px;padding:20px}.right{text-align:right}.pill{display:inline-block;padding:5px 9px;border-radius:99px;background:#ffe06a;font-size:12px}.small{font-size:12px;color:#765}.calc{max-width:520px}.calc input{font-size:24px;text-align:right}.calc button{font-size:20px;margin:3px}.slip{width:150mm;height:80mm;background:#fff;border:1px solid #111;padding:5mm;margin:auto;color:#111;font-size:11px;box-sizing:border-box;overflow:hidden}.slip h2{text-align:center;margin:0;color:#b00000;font-size:22px}.slip .line{border-bottom:1px dashed #333;margin:7px 0}.sliprow{display:flex;justify-content:space-between;margin:2px 0}.slip .signbox{display:inline-block;width:48%;text-align:center;font-size:10px;margin-top:4px;vertical-align:bottom}.slip .signrow{display:flex;justify-content:space-between;position:absolute;left:5mm;right:5mm;bottom:5mm}.slip{position:relative;padding-bottom:22mm}.watermark{opacity:.08;font-size:50px;position:absolute;transform:rotate(-20deg);left:25mm;top:30mm}
+@media(max-width:750px){
+ .menuBtn{display:inline-block}
+ .headerRight #who{display:none}
+ .headerRight .langTop{display:none}
+ aside{width:280px;left:-300px;top:68px;padding:15px}
+ aside.open{left:0}
+ .menuOverlay.show{display:block}
+ main{margin-left:0;width:100%;padding:12px}
+ header .brand{font-size:15px}.brand span{font-size:10px}
+ .dashboardGrid{grid-template-columns:1fr}
+}
+@media print{body>*:not(#printArea){display:none!important}#printArea{display:block!important}.slip{border:0;margin:0}}
+#printArea{display:none}
+
+.langBtn{padding:6px 12px;border:1px solid #d71920;background:#fff;border-radius:18px;font-size:12px}.langBtn.active{background:#d71920;color:#fff}.dashboardLang{text-align:center;margin:4px 0 10px}
+.legalLetter{width:min(210mm,100%);min-height:297mm;margin:auto;background:#fff;padding:18mm;border:1px solid #bbb;box-shadow:0 8px 28px #0001;color:#111;font-family:Arial,"Noto Sans Tamil",sans-serif;position:relative}
+.legalLetter:after{content:"PRIVATE FINANCE DOCUMENT";position:absolute;top:45%;left:18%;font-size:28px;letter-spacing:3px;transform:rotate(-25deg);opacity:.06;pointer-events:none}
+.legalHead{text-align:center;border-bottom:3px double #111;padding-bottom:10px}.legalHead h1{font-size:23px;margin:0;color:#a8070c}.legalHead h2{font-size:15px;margin:4px 0}.legalRef{display:flex;justify-content:space-between;margin:14px 0;font-size:12px}.legalTitle{text-align:center;text-decoration:underline;font-size:18px;font-weight:900;margin:16px 0}.legalTable{width:100%;border-collapse:collapse;margin:12px 0}.legalTable td{border:1px solid #555;padding:8px;white-space:normal}.legalSign{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:70px}.signbox{text-align:center;border-top:1px solid #111;padding-top:8px;min-height:55px}.legalNote{font-size:10px;text-align:center;margin-top:28px;border-top:1px solid #999;padding-top:8px}
+@media print{.legalLetter{box-shadow:none;border:0;width:210mm;min-height:297mm}.legalSign{margin-top:70px}}
+.headerRight{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.testBanner{background:#fff3cd;color:#8a4b00;padding:8px;text-align:center;font-weight:800;border-bottom:2px solid #f0ad4e}
+
+.financeAddress{text-align:center;font-size:12px;font-weight:700;margin:0 auto 10px;color:#333}
+@media(max-width:600px){.financeAddress{font-size:11px;line-height:1.35;padding:0 8px}}
+
+/* ===== MOBILE UI FIX ===== */
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overscroll-behavior-x:none;
+  -webkit-text-size-adjust:100%;
+}
+body{touch-action:pan-y;}
+main{min-width:0;}
+@media(max-width:750px){
+  header{
+    height:58px;
+    padding:0 8px;
+    min-height:58px;
+  }
+  .headerLeft{left:8px}
+  .headerRight{right:8px}
+  .menuBtn{
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:40px;
+    padding:0;
+    font-size:0;
+  }
+  .menuBtn:after{
+    content:"☰";
+    font-size:22px;
+  }
+  header .brand{
+    font-size:14px;
+    line-height:1.15;
+    max-width:210px;
+  }
+  header .brand span{font-size:9px;margin-top:2px}
+  .headerRight .pill{font-size:10px;padding:4px 6px;max-width:105px;overflow:hidden;text-overflow:ellipsis}
+  aside{
+    top:58px;
+    bottom:0;
+    left:-292px;
+    width:280px;
+    max-width:82vw;
+    padding:10px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    z-index:100;
+  }
+  aside.open{left:0}
+  .menuOverlay{
+    inset:58px 0 0 0;
+    z-index:90;
+  }
+  aside button{
+    min-height:46px;
+    margin:5px 0;
+    font-size:15px;
+    border-radius:10px;
+  }
+  main{
+    margin-left:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:10px!important;
+    overflow-x:hidden;
+  }
+  .layout{display:block;min-height:calc(100vh - 58px)}
+  .page{width:100%;max-width:100%;overflow:visible}
+  .page h2{font-size:20px;line-height:1.25}
+  .page h3{font-size:17px}
+  .dashboardGrid{grid-template-columns:1fr!important;gap:10px}
+  .dashboardBox{
+    min-height:100px;
+    padding:15px;
+    border-radius:16px;
+  }
+  .dashboardBox .value{font-size:25px}
+  .grid{grid-template-columns:1fr!important;gap:10px}
+  .formgrid{
+    grid-template-columns:1fr!important;
+    gap:4px;
+  }
+  .card{
+    padding:13px;
+    border-radius:13px;
+    width:100%;
+    max-width:100%;
+  }
+  input,select,textarea{
+    min-height:44px;
+    font-size:16px;
+    margin:4px 0 10px;
+  }
+  textarea{min-height:90px}
+  button{
+    min-height:42px;
+    font-size:14px;
+  }
+  .toolbar{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:7px;
+  }
+  .toolbar>*,
+  .toolbar button,
+  .toolbar input,
+  .toolbar select{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .tablewrap{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    border-radius:10px;
+    touch-action:pan-x pan-y;
+  }
+  table{
+    min-width:760px;
+  }
+  .tablewrap table th,.tablewrap table td{
+    font-size:12px;
+    padding:8px;
+  }
+  .modalbox{
+    width:calc(100% - 20px);
+    max-width:calc(100% - 20px);
+    max-height:88vh;
+    padding:15px;
+    border-radius:15px;
+  }
+  .legalLetter{
+    width:100%;
+    min-height:auto;
+    padding:10mm 7mm;
+    font-size:12px;
+    box-shadow:none;
+  }
+  .legalHead h1{font-size:18px}
+  .legalHead h2{font-size:12px}
+  .legalRef{font-size:10px;gap:8px}
+  .legalTable{font-size:11px}
+  .legalTable td{padding:6px}
+  .legalSign{grid-template-columns:1fr;gap:35px;margin-top:40px}
+  .slip{
+    width:100%;
+    max-width:100%;
+    height:auto;
+    min-height:80mm;
+    margin:0 auto;
+    padding:5mm;
+  }
+  .slip .signrow{position:static;margin-top:12mm}
+  .financeAddress{font-size:10px;line-height:1.4;padding:0 4px}
+  .dashboardLang{margin:5px 0 10px}
+}
+/* Do not turn horizontal finger movement into page navigation. */
+@media(max-width:750px){
+  .layout, main, .page, .card, .dashboardBox{overscroll-behavior-x:none;}
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style id="smf-mobile-nav-fix">
+html,body{width:100%;max-width:100%;overflow-x:hidden!important;}
+body{min-height:100vh;touch-action:pan-y;overscroll-behavior-x:none;}
+#app,main,.page,.layout,.card,.dashboardBox{max-width:100%;box-sizing:border-box;}
+.tablewrap{max-width:100%;overflow-x:auto!important;overflow-y:hidden;touch-action:pan-x pan-y;}
+@media(max-width:700px){main{width:100%!important;margin-left:0!important}.page{width:100%!important;overflow-x:hidden!important}}
+</style>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="theme-color" content="#8b0000"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));}</script></head>
+<body>
+
+<div id="login" class="login">
+  <div class="loginbox">
+    <div class="brand">செந்தூர் முருகன் ஃபைனான்ஸ்<span>Senthoor Murugan Finance</span></div>
+    <hr>
+    <h3>Login / உள்நுழைவு</h3>
+    <button class="muted" style="width:100%;margin-bottom:8px" onclick="resetPassword()">Forgot / Reset Password</button>
+    <input id="loginUser" placeholder="Email (Supabase) / Username">
+    <input id="loginPass" type="password" placeholder="Password">
+    <button class="primary" style="width:100%" onclick="login()">LOGIN</button>
+    <p class="small">Owner: use your Supabase Auth email &amp; password. Developer Test: developer / dev1234</p>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+<header>
+  <div class="headerLeft">
+    <button class="menuBtn" onclick="toggleMenu()">⋮</button>
+  </div>
+  <div class="brand" style="text-align:center">செந்தூர் முருகன் ஃபைனான்ஸ் <span>Senthoor Murugan Finance</span></div>
+  <div class="headerRight"><span id="modeBadge" class="pill"></span><span id="who" class="pill"></span></div>
+</header>
+<div id="testBanner" class="testBanner" style="display:none">🧪 TEST / DEVELOPER MODE — REAL OWNER / STAFF DATA IS SAFE</div>
+<div class="layout">
+<aside>
+  <button onclick="showPage('dashboard',this)">🏠 <span data-ta="டாஷ்போர்டு" data-en="Dashboard">Dashboard</span></button>
+  <button onclick="showPage('parties',this)">👥 <span data-ta="வாடிக்கையாளர்கள்" data-en="Parties">Parties</span></button>
+  <button onclick="showPage('entry',this)">➕ <span data-ta="வரவு பதிவு" data-en="Credit Entry">Credit Entry</span></button>
+  <button onclick="showPage('loans',this)">💰 <span data-ta="வாடிக்கையாளர் கடன்கள்" data-en="Customer Loans">Customer Loans</span></button>
+  <button onclick="showPage('sanction',this)">📜 <span data-ta="கடன் ஒப்புதல் கடிதம்" data-en="Loan Sanction Letter">Loan Sanction Letter</span></button>
+  <button onclick="showPage('payments',this)">🧾 <span data-ta="Payment Slip" data-en="Payment Slips">Payment Slips</span></button>
+  <button id="depositMenu" onclick="showPage('deposit',this)">🏦 <span data-ta="உரிமையாளர் வைப்பு" data-en="Owner Deposit">Owner Deposit</span></button>
+  <button onclick="showPage('bills',this)">📅 <span data-ta="பில்கள் / அறிக்கைகள்" data-en="Bills / Reports">Bills / Reports</span></button>
+  <button onclick="showPage('interest',this)">🧮 <span data-ta="வட்டி கணிப்பான்" data-en="Interest Calculator">Interest Calculator</span></button>
+  <button id="staffMenu" onclick="showPage('staff',this)">👤 <span data-ta="பணியாளர் / பயனர்கள்" data-en="Staff / Users">Staff / Users</span></button>
+  <button onclick="showPage('settings',this)">⚙️ <span data-ta="அமைப்புகள்" data-en="Settings">Settings</span></button>
+  <button class="danger" onclick="logout()">🚪 <span data-ta="வெளியேறு" data-en="Logout">Logout</span></button>
+</aside>
+<div id="menuOverlay" class="menuOverlay" onclick="toggleMenu(false)"></div>
+
+<main>
+<section id="dashboard" class="page active">
+<h2 style="text-align:center;color:#b00000;margin-bottom:2px">செந்தூர் முருகன் ஃபைனான்ஸ்</h2>
+<div style="text-align:center;font-weight:800;font-size:14px;margin-bottom:2px">Senthoor Murugan Finance</div><div class="financeAddress">பொள்ளாச்சி மெயின் ரோடு, தாலுக்கா ஆபீஸ் எதிரில், பல்லடம்-641 664.</div>
+<div class="dashboardLang"><button id="taBtn" class="langBtn" onclick="setLang('ta',this)">தமிழ்</button><button id="enBtn" class="langBtn" onclick="setLang('en',this)">English</button></div>
+<h3 id="dashTitle" style="text-align:center;margin-bottom:18px">Dashboard</h3>
+<div class="dashboardGrid">
+ <div class="dashboardBox" onclick="showPage('ownerBalance')"><div class="label" data-ta="🏦 கிடைக்கும் உரிமையாளர் இருப்பு" data-en="🏦 Available Owner Balance">🏦 Available Owner Balance</div><div class="value" id="dOwnerBalance">₹0</div></div>
+ <div class="dashboardBox" onclick="showPage('creditDetails')"><div class="label" data-ta="📊 மொத்த கடன்" data-en="📊 Total Loans">📊 Total Loans</div><div class="value" id="dCredit">₹0</div></div>
+ <div class="dashboardBox" onclick="showPage('paymentDetails')"><div class="label" data-ta="🧾 மொத்த திருப்பிச் செலுத்தல்" data-en="🧾 Total Repayment">🧾 Total Repayment</div><div class="value" id="dPayment">₹0</div></div>
+ <div class="dashboardBox" onclick="showPage('dueDetails')" style="cursor:pointer"><div class="label" data-ta="📊 மொத்த நிலுவை — Touch" data-en="📊 Total Due — Touch">📊 Total Due — Touch</div><div class="value" id="dBalance">₹0</div><div class="small">Touch to see who has not paid and how much is due</div></div>
+ <div class="dashboardBox" onclick="showPage('parties')" style="cursor:pointer"><div class="label" data-ta="👥 மொத்த வாடிக்கையாளர்கள் — Touch" data-en="👥 Total Parties — Touch">👥 Total Parties — Touch</div><div class="value" id="dParties">0</div><div class="small">Touch to view loan / paid / due details</div></div>
+ <div class="dashboardBox"><div class="label" data-ta="📕 நடப்பு கடன்கள்" data-en="📕 Active Loans">📕 Active Loans</div><div class="value" id="dLoans">0</div></div>
+ <div class="dashboardBox overdue"><div class="label" data-ta="🚨 காலதாமதம்" data-en="🚨 Overdue">🚨 Overdue</div><div class="value" id="dOverdue">0</div></div>
+</div>
+<br>
+<div class="card"><h3 data-ta="விரைவு பதிவு" data-en="Quick Entry">Quick Entry</h3>
+<div class="toolbar"><button class="primary" onclick="showPage('loans')">+ New Loan / புதிய கடன்</button><button class="yellow" onclick="showPage('payments')">Payment Slip</button><button class="muted" onclick="showPage('parties')">Add Party</button></div></div>
+<br>
+<div class="card"><h3 data-ta="காலதாமதமான வாடிக்கையாளர்கள்" data-en="Overdue Customers">Overdue Customers</h3><div id="overdueList"></div></div>
+<br>
+<div class="card"><h3 data-ta="சமீபத்திய பதிவுகள்" data-en="Recent Entries">Recent Entries</h3><div id="recent"></div></div>
+</section>
+
+<section id="ownerBalance" class="page"><h2>🏦 Available Owner Balance</h2><div class="card"><h2 id="ownerBalanceBig">₹0</h2><p class="small">Owner Deposit + Repayments − Loans Disbursed</p><div id="ownerBalanceHistory"></div></div></section>
+<section id="creditDetails" class="page"><h2>💰 Loan Details</h2><div class="card"><div id="creditDetailSummary"></div></div></section>
+<section id="paymentDetails" class="page"><h2>🧾 Repayment Details</h2><div class="card"><div id="paymentDetailSummary"></div></div></section>
+<section id="dueDetails" class="page"><h2>📊 Total Due / நிலுவை</h2><div class="toolbar"><button class="primary" onclick="renderDueDetails()">Refresh</button><button class="yellow" onclick="exportDueCSV()">CSV Download</button><button class="yellow" onclick="exportDuePDF()">PDF Download</button></div><div class="card"><div id="dueSummary"></div></div><div class="card"><div id="dueTable"></div></div></section>
+<section id="parties" class="page">
+<h2>Parties / வாடிக்கையாளர்கள்</h2>
+<div class="toolbar"><button class="primary" onclick="openParty()">+ Add Party</button><input id="partySearch" placeholder="Search name / phone" oninput="renderParties()"></div>
+<div class="tablewrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Address</th><th>Aadhaar</th><th>Account No</th><th>Nominee</th><th>Loan / Due / Dues</th><th>Action</th></tr></thead><tbody id="partyTable"></tbody></table></div>
+</section>
+
+<section id="entry" class="page">
+<h2>Credit / வரவு Entry</h2>
+<div class="card">
+<div class="formgrid">
+<div><label>Party</label><select id="eParty"></select></div>
+<div><label>Amount ₹</label><input id="eAmount" type="number" oninput="calcEntryInstallment()"></div>
+<div><label>Interest %</label><input id="eRate" type="number" step=".01" placeholder="Interest %" oninput="calcEntryInstallment()"></div>
+<div><label>Repayment Type / தவணை வகை</label><select id="eCycle" onchange="calcEntryInstallment()"><option value="weekly">Weekly / வாரம்</option><option value="monthly" selected>Monthly / மாதம்</option></select></div>
+<div><label>Due Period / தவணை எண்ணிக்கை</label><input id="ePeriod" type="number" min="1" value="36" oninput="suggestEntryDueDate();calcEntryInstallment()"></div>
+<div><label>Start Date</label><input id="eDate" type="date" oninput="suggestEntryDueDate()"></div>
+<div><label>Final Due / Close Date</label><input id="eDue" type="date" readonly></div>
+<div><label>Per Installment / தவணை தொகை</label><input id="eInstallment" type="text" readonly></div>
+</div>
+<label>Note</label><textarea id="eNote"></textarea>
+<button class="primary" onclick="addEntry()">Save Credit / வரவு</button>
+</div>
+</section>
+
+<section id="loans" class="page">
+<h2 data-ta="வாடிக்கையாளர் கடன்" data-en="Customer Loan">Customer Loan</h2>
+<div class="card">
+<p class="small">Example: Owner gives ₹1,00,000 at 5% interest for 3 years. You can fix or change the due date before saving.</p>
+<div class="formgrid">
+<div><label>Customer / Party</label><select id="lParty"></select></div>
+<div><label>Principal ₹ / கடன் தொகை</label><input id="lAmount" type="number" placeholder="100000" oninput="calcLoanInstallment()"></div>
+<div><label>Interest % / வட்டி</label><input id="lRate" type="number" step=".01" value="5" oninput="calcLoanInstallment()"></div>
+<div><label>Repayment Type / தவணை வகை</label><select id="lCycle" onchange="suggestDueDate();calcLoanInstallment()"><option value="weekly">Weekly / வாரம்</option><option value="monthly" selected>Monthly / மாதம்</option></select></div>
+<div><label>Due Period / தவணை எண்ணிக்கை</label><input id="lPeriod" type="number" min="1" value="36" oninput="suggestDueDate();calcLoanInstallment()"></div>
+<div><label>Loan Start Date / தொடக்க தேதி</label><input id="lStart" type="date" oninput="suggestDueDate()"></div>
+<div><label>Final Due / Close Date / இறுதி தேதி</label><input id="lDue" type="date" readonly></div>
+<div><label>Per Installment / மாத/வார தவணை</label><input id="lInstallment" type="text" readonly></div>
+</div>
+<label>Note / குறிப்புகள்</label><textarea id="lNote"></textarea>
+<button class="primary" onclick="addLoan()">Save Loan / கடன் பதிவு</button>
+</div>
+<br>
+<div class="card"><h3>Customer Loan List / வாடிக்கையாளர் கடன் பட்டியல்</h3>
+<div class="toolbar"><input id="loanSearch" placeholder="Search customer..." oninput="renderLoans()"></div>
+<div class="tablewrap"><table><thead><tr><th>Customer</th><th>Principal</th><th>Interest</th><th>Type</th><th>Total Dues</th><th>Paid Dues</th><th>Due Amount</th><th>Start</th><th>Final Due</th><th>Status</th><th>Action</th></tr></thead><tbody id="loanTable"></tbody></table></div>
+</div>
+</section>
+
+<section id="sanction" class="page">
+<h2 data-ta="கடன் ஒப்புதல் கடிதம்" data-en="Loan Sanction Letter">Loan Sanction Letter</h2>
+<div class="card">
+<p class="small" data-ta="வாடிக்கையாளர் மற்றும் கடன் விவரங்களை தேர்வு செய்து முறையான Finance Letterhead வடிவில் கடிதத்தை உருவாக்கலாம்." data-en="Select a customer loan and generate a formal finance letterhead document.">Select a customer loan and generate a formal finance letterhead document.</p>
+<div class="formgrid"><div><label data-ta="கடன் தேர்வு" data-en="Select Loan">Select Loan</label><select id="sLoan" onchange="renderSanction()"></select></div></div>
+<div class="toolbar"><button class="primary" onclick="renderSanction()" data-ta="கடிதம் உருவாக்கு" data-en="Generate Letter">Generate Letter</button><button class="yellow" onclick="downloadSanctionPDF()" data-ta="PDF Download" data-en="Download PDF">Download PDF</button><button class="muted" onclick="printSanction()" data-ta="Print / View" data-en="Print / View">Print / View</button></div>
+</div><br><div id="sanctionPreview"></div>
+</section>
+
+<section id="payments" class="page">
+<h2 data-ta="Payment Slip" data-en="Payment Slip">Payment Slip</h2>
+<div class="card">
+<div class="formgrid">
+<div><label>Party</label><select id="pParty" onchange="fillPaymentLoans()"></select></div>
+<div><label>Loan / Due</label><select id="pLoan"></select></div>
+<div><label>Payment Amount ₹</label><input id="pAmount" type="number"></div>
+<div><label>Date</label><input id="pDate" type="date"></div>
+<div><label>Payment Type</label><select id="pType"><option>Cash</option><option>UPI</option><option>Bank</option></select></div>
+</div>
+<label>Note</label><textarea id="pNote"></textarea>
+<button class="yellow" onclick="makePayment()">Save & Generate Slip</button>
+</div>
+<br><div id="slipPreview"></div>
+</section>
+
+<section id="deposit" class="page">
+<h2 data-ta="உரிமையாளர் வைப்பு" data-en="Owner Deposit">Owner Deposit</h2><div class="card"><div class="formgrid"><div><label>Amount ₹ / தொகை</label><input id="depAmount" type="number"></div><div><label>Date / தேதி</label><input id="depDate" type="date"></div><div><label>Bank / Account</label><input id="depBank"></div></div><textarea id="depNote" placeholder="Note / குறிப்புகள்"></textarea><button class="yellow" onclick="addDeposit()">Save Deposit / வைப்பு சேமிக்க</button></div><br><div class="card"><div id="depositTable"></div></div></section>
+<section id="bills" class="page">
+<h2>📑 Statements / Reports</h2>
+<div class="card">
+<div class="toolbar"><label>View <select id="statementMode" onchange="statementModeChanged()"><option value="date">Date Wise</option><option value="month">Monthly Wise</option><option value="year">Yearly Wise</option></select></label><label>From <input id="fromDate" type="date"></label><label>To <input id="toDate" type="date"></label><label>Month <input id="statementMonth" type="month"></label><label>Year <input id="statementYear" type="number" min="2000" max="2100" placeholder="2026"></label></div>
+<div class="toolbar"><button class="primary" onclick="renderBills()">Show Statement</button><button class="yellow" onclick="exportCSV()">CSV Download</button><button class="yellow" onclick="exportStatementPDF()">PDF Download</button></div>
+</div><br>
+<div class="card"><div id="statementSummary"></div></div><br>
+<div class="tablewrap"><table><thead><tr><th>Date</th><th>Party</th><th>Type</th><th>Amount</th><th>User</th><th>Details</th></tr></thead><tbody id="billTable"></tbody></table></div>
+</section>
+
+<section id="interest" class="page">
+<h2>வட்டி Calculator</h2>
+<div class="card calc">
+<label>Principal ₹</label><input id="cPrincipal" type="number" oninput="calcInterest()">
+<label>Interest % (monthly)</label><input id="cRate" type="number" step=".01" oninput="calcInterest()">
+<label>Months</label><input id="cMonths" type="number" value="1" oninput="calcInterest()">
+<div class="grid"><div class="card"><span>Interest</span><h2 id="cInterest">₹0</h2></div><div class="card"><span>Total</span><h2 id="cTotal">₹0</h2></div></div>
+<p class="small">Simple monthly interest calculation. Final finance terms should be based on your actual agreement.</p>
+</div>
+</section>
+
+<section id="staff" class="page">
+<h2>Owner → Staff Access</h2>
+<div class="card">
+<p>Create users and decide exactly what they can access.</p>
+<button class="primary" onclick="openUser()">+ Create User</button>
+<div class="tablewrap"><table><thead><tr><th>User</th><th>Role</th><th>Access</th><th>Action</th></tr></thead><tbody id="userTable"></tbody></table></div>
+</div>
+</section>
+
+<section id="developer" class="page">
+<h2>🧪 Developer / Test Mode</h2>
+<div class="card" style="border:2px solid #b00000">
+<h3>TEST DATABASE ONLY</h3>
+<p>Developer testing uses a separate Local Storage database. Owner/Staff production data is not used in this mode.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="yellow" onclick="switchMode('test')">🧪 Test Mode</button>
+<button class="primary" style="display:none" onclick="switchMode('production')">🔒 Production Mode</button>
+<button class="danger" onclick="resetTestData()">♻️ Reset Test Data</button>
+</div>
+<p class="small">Developer login: <b>developer</b> / <b>dev1234</b></p>
+</div>
+</section>
+
+<section id="settings" class="page">
+<h2>Settings</h2>
+<div class="card">
+<h3>Finance Details</h3>
+<div class="formgrid"><input id="sTamil" value="செந்தூர் முருகன் ஃபைனான்ஸ்"><input id="sEnglish" value="Senthoor Murugan Finance"></div>
+<button class="primary" onclick="saveSettings()">Save</button>
+<hr>
+<h3>🔐 Password & Data Security</h3>
+<p class="small">Owner / Developer only. Resetting production data permanently deletes parties, loans, repayments, deposits, entries and users from this browser.</p>
+<div class="toolbar"><button class="danger" onclick="resetAllDataSecure()">♻️ Reset ALL Data</button><button class="muted" onclick="changeMyPassword()">🔑 Change My Password</button></div>
+<hr>
+<h3>Online Server Sync</h3>
+<p class="small"><b>Supabase is the shared production database.</b> Local Storage is only a browser cache/test store. Use the same GitHub URL on every device.</p>
+<input id="apiUrl" placeholder="https://your-domain.com/api">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+<button class="yellow" onclick="saveApi()">Save API URL</button>
+<button class="primary" onclick="syncNow()">🔄 Sync Now</button>
+<button class="muted" onclick="pullOnlineData()">☁️ Pull Online Data</button>
+</div>
+<div id="syncStatus" class="small" style="margin-top:8px">Offline / Local Storage</div>
+<p class="small">Production flow: GitHub Pages → Supabase Auth → PostgreSQL → RLS → Realtime. Do not put a Supabase service-role key in this file.</p>
+</div>
+</section>
+</main></div></div>
+
+<div id="modal" class="modal"><div class="modalbox" id="modalContent"></div></div>
+<div id="printArea"></div>
+
+<script>
+/* ================= SUPABASE CONFIG =================
+   Production data uses Supabase Auth + normalized tables.
+   LocalStorage is retained only as an offline cache/fallback.
+===================================================== */
+const SUPABASE_URL='https://nfjnmkbftevpydjxbtnh.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_pKtUoWA4IOHx-C-B5OMXhA_T4FSIWhi';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let supabaseSession=null;
+let remoteReady=false;
+let remoteLoading=false;
+
+const remoteTables={
+  parties:'parties',
+  entries:'credit_entries',
+  payments:'payments',
+  slips:'payment_slips',
+  bills:'bills',
+  logs:'activity_logs',
+  settings:'finance_settings',
+  users:'profiles',
+  permissions:'staff_permissions',
+  loans:'loans',
+  deposits:'deposits'
+};
+
+function remoteId(x){ return String(x?.id ?? ''); }
+function dbId(x){ return String(x?.id ?? ''); }
+function safeNum(x){ const n=Number(x); return Number.isFinite(n)?n:0; }
+function currentUserId(){ return supabaseSession?.user?.id || null; }
+
+async function loadNormalizedFromSupabase(){
+  if(!supabaseSession || remoteLoading) return false;
+  remoteLoading=true;
+  try{
+    const [
+      parties,entries,payments,slips,bills,logs,settings,users,permissions,loans,deposits
+    ]=await Promise.all([
+      supabaseClient.from('parties').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('credit_entries').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('payments').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('payment_slips').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('bills').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('activity_logs').select('*').order('created_at',{ascending:false}).limit(500),
+      supabaseClient.from('finance_settings').select('*').eq('id',1).maybeSingle(),
+      supabaseClient.from('profiles').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('staff_permissions').select('*'),
+      supabaseClient.from('loans').select('*').order('created_at',{ascending:true}),
+      supabaseClient.from('deposits').select('*').order('created_at',{ascending:true})
+    ]);
+
+    const results=[parties,entries,payments,slips,bills,logs,settings,users,permissions,loans,deposits];
+    const bad=results.find(r=>r.error);
+    if(bad) throw bad.error;
+
+    db.parties=(parties.data||[]).map(x=>({
+      id:String(x.id),name:x.name||'',phone:x.phone||'',
+      aadhaar:x.aadhaar_number||'',account:x.account_number||'',
+      address:x.address||'',nominee:x.nominee_name||'',
+      nphone:x.nominee_phone||'',naddress:x.nominee_address||'',
+      created_by:x.created_by
+    }));
+
+    db.entries=(entries.data||[]).map(x=>({
+      id:String(x.id),party:x.party_id,partyId:x.party_id,
+      amount:safeNum(x.amount),rate:safeNum(x.rate),cycle:x.cycle||'monthly',
+      period:safeNum(x.period),date:x.entry_date||'',due:x.due_date||'',
+      note:x.notes||'',user:x.username||x.created_by||'',created_by:x.created_by
+    }));
+
+    db.payments=(payments.data||[]).map(x=>({
+      id:String(x.id),party:x.party_id,partyId:x.party_id,loanId:x.loan_id||'',
+      amount:safeNum(x.amount),date:x.payment_date||'',
+      method:x.payment_method||'',reference:x.reference_number||'',
+      type:x.payment_type||'',note:x.notes||'',
+      user:x.username||x.created_by||'',created_by:x.created_by
+    }));
+
+    db.slips=(slips.data||[]).map(x=>({
+      id:String(x.id),party:x.party_id,partyId:x.party_id,
+      paymentId:x.payment_id,slipNumber:x.slip_number,
+      amount:safeNum(x.amount),date:x.slip_date||'',
+      note:x.notes||'',created_by:x.created_by
+    }));
+
+    db.bills=(bills.data||[]).map(x=>({
+      id:String(x.id),party:x.party_id,partyId:x.party_id,
+      billNumber:x.bill_number,date:x.bill_date||'',
+      amount:safeNum(x.amount),billType:x.bill_type||'General',
+      details:x.details||{},created_by:x.created_by
+    }));
+
+    db.loans=(loans.data||[]).map(x=>({
+      id:String(x.id),party:x.party_id,partyId:x.party_id,
+      amount:safeNum(x.amount),rate:safeNum(x.rate),
+      cycle:x.cycle||'monthly',period:safeNum(x.period),
+      start:x.start_date||'',due:x.due_date||'',
+      note:x.notes||'',user:x.username||x.created_by||'',
+      closed:!!x.closed,sourceEntryId:x.source_entry_id||'',
+      created_by:x.created_by
+    }));
+
+    db.deposits=(deposits.data||[]).map(x=>({
+      id:String(x.id),amount:safeNum(x.amount),date:x.deposit_date||'',
+      bank:x.bank||'',note:x.notes||'',
+      user:x.username||x.created_by||'',created_by:x.created_by
+    }));
+
+    db.users=(users.data||[]).map(x=>({
+      id:x.id,u:x.id,username:x.username||x.full_name||x.id,
+      full_name:x.full_name||'',role:x.role||'Staff',
+      phone:x.phone||'',active:x.active!==false,
+      access:(permissions.data||[])
+        .filter(p=>p.user_id===x.id&&p.allowed)
+        .map(p=>p.permission)
+    }));
+
+    const setting=settings.data||{};
+    db.settings=db.settings||{};
+    db.settings.ta=setting.finance_name_ta||'செந்தூர் முருகன் ஃபைனான்ஸ்';
+    db.settings.en=setting.finance_name_en||'Senthoor Murugan Finance';
+    db.settings.address=setting.address||'';
+    db.settings.phone=setting.phone||'';
+    db.settings.api=db.settings.api||'';
+
+    normalizeDB();
+    localStorage.setItem(PROD_KEY,JSON.stringify(db));
+    remoteReady=true;
+    return true;
+  }catch(err){
+    console.error('Supabase normalized load failed:',err);
+    remoteReady=false;
+    setSyncStatus('🔴 Supabase load failed');
+    return false;
+  }finally{
+    remoteLoading=false;
+  }
+}
+async function upsertRemote(table, rows){
+  if(!supabaseSession || !rows?.length) return;
+  const {error}=await supabaseClient.from(table).upsert(rows,{onConflict:'id'});
+  if(error) throw error;
+}
+
+async function syncNormalizedToSupabase(){
+  if(!supabaseSession || !remoteReady || appMode==='test') return;
+  // Legacy/manual migration sync. Normal production CRUD below writes one row at a time.
+  try{
+    const uid=currentUserId();
+    await upsertRemote('parties',(db.parties||[]).map(x=>({
+      id:x.id,name:x.name,address:x.address||null,phone:x.phone||null,
+      aadhaar_number:x.aadhaar||null,account_number:x.account||null,
+      nominee_name:x.nominee||null,nominee_address:x.naddress||null,
+      nominee_phone:x.nphone||null,created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('credit_entries',(db.entries||[]).map(x=>({
+      id:x.id,party_id:x.partyId||x.party,amount:safeNum(x.amount),
+      rate:safeNum(x.rate),cycle:x.cycle||'monthly',period:safeNum(x.period),
+      entry_date:x.date||today(),due_date:x.due||null,notes:x.note||null,
+      created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('payments',(db.payments||[]).map(x=>({
+      id:x.id,party_id:x.partyId||x.party,loan_id:x.loanId||null,
+      amount:safeNum(x.amount),payment_date:x.date||today(),
+      payment_method:x.method||null,payment_type:x.type||null,
+      reference_number:x.reference||null,notes:x.note||null,
+      created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('payment_slips',(db.slips||[]).map(x=>({
+      id:x.id,party_id:x.partyId||x.party,payment_id:x.paymentId||null,
+      slip_number:x.slipNumber||String(x.id),amount:safeNum(x.amount),
+      slip_date:x.date||today(),notes:x.note||null,created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('bills',(db.bills||[]).map(x=>({
+      id:x.id,party_id:x.partyId||x.party||null,
+      bill_number:x.billNumber||String(x.id),bill_date:x.date||today(),
+      amount:safeNum(x.amount),bill_type:x.billType||'General',
+      details:x.details||{},created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('loans',(db.loans||[]).map(x=>({
+      id:x.id,party_id:x.partyId||x.party,amount:safeNum(x.amount),
+      rate:safeNum(x.rate),cycle:x.cycle||'monthly',period:Number(x.period||0),
+      start_date:x.start||today(),due_date:x.due||null,closed:!!x.closed,
+      notes:x.note||x.notes||null,source_entry_id:x.sourceEntryId||null,
+      created_by:x.created_by||uid
+    })));
+
+    await upsertRemote('deposits',(db.deposits||[]).map(x=>({
+      id:x.id||crypto.randomUUID(),amount:safeNum(x.amount),
+      deposit_date:x.date||today(),bank:x.bank||null,
+      notes:x.note||null,created_by:x.created_by||uid
+    })));
+
+    const s=db.settings||{};
+    const {error:se}=await supabaseClient.from('finance_settings').upsert({
+      id:1,finance_name_ta:s.ta||'செந்தூர் முருகன் ஃபைனான்ஸ்',
+      finance_name_en:s.en||'Senthoor Murugan Finance',
+      address:s.address||null,phone:s.phone||null,
+      updated_by:uid,updated_at:new Date().toISOString()
+    },{onConflict:'id'});
+    if(se) throw se;
+
+    setSyncStatus('🟢 Supabase connected');
+  }catch(err){
+    console.error('Supabase compatibility sync failed:',err);
+    setSyncStatus('🟠 Server sync failed');
+    throw err;
+  }
+}
+
+async function remoteUpsertOne(table,row){
+  if(appMode==='test') return true;
+  if(!supabaseSession) throw new Error('Not signed in');
+  const {data,error}=await supabaseClient.from(table).upsert(row,{onConflict:'id'}).select().single();
+  if(error) throw error;
+  return data;
+}
+
+async function remoteInsertOne(table,row){
+  if(appMode==='test') return true;
+  if(!supabaseSession) throw new Error('Not signed in');
+  const {data,error}=await supabaseClient.from(table).insert(row).select().single();
+  if(error) throw error;
+  return data;
+}
+
+async function remoteDeleteOne(table,id){
+  if(appMode==='test') return true;
+  if(!supabaseSession) throw new Error('Not signed in');
+  const {error}=await supabaseClient.from(table).delete().eq('id',id);
+  if(error) throw error;
+  return true;
+}
+
+async function refreshFromServer(){
+  if(appMode==='production' && supabaseSession){
+    const ok=await loadNormalizedFromSupabase();
+    if(!ok) throw new Error('Could not refresh from Supabase');
+    refresh();
+  }
+}
+async function loadDBFromSupabase(mode){
+  if(!supabaseSession || mode==='test') return false;
+  return loadNormalizedFromSupabase();
+}
+async function ensureRemoteState(mode){ if(mode==='test')return false; return loadNormalizedFromSupabase(); }
+
+const PROD_KEY='smf_finance_v1';
+const TEST_KEY='smf_finance_test_v1';
+const MODE_KEY='smf_app_mode';
+let appMode=localStorage.getItem(MODE_KEY)||'production';
+const KEY=appMode==='test'?TEST_KEY:PROD_KEY;
+let db=getDBForMode(appMode);
+function normalizeDB(){db.parties=db.parties||[];db.entries=db.entries||[];db.payments=db.payments||[];db.deposits=db.deposits||[];db.loans=db.loans||[];db.users=db.users||[];db.settings=db.settings||{ta:'செந்தூர் முருகன் ஃபைனான்ஸ்',en:'Senthoor Murugan Finance',api:''};db.settings.ta=db.settings.ta||'செந்தூர் முருகன் ஃபைனான்ஸ்';db.settings.en=db.settings.en||'Senthoor Murugan Finance';db.settings.api=db.settings.api||'';}
+normalizeDB();
+function defaultDB(){return {parties:[],entries:[],payments:[],deposits:[],loans:[],users:[],settings:{ta:'செந்தூர் முருகன் ஃபைனான்ஸ்',en:'Senthoor Murugan Finance',api:''}}}
+function productionDB(){return defaultDB()}
+function getDBForMode(mode){const k=mode==='test'?TEST_KEY:PROD_KEY; let d=JSON.parse(localStorage.getItem(k)||'null'); if(!d){d=mode==='test'?defaultDB():productionDB(); if(mode==='test')d.users=[{u:'developer',pass:'dev1234',role:'Developer',access:['all']}]; localStorage.setItem(k,JSON.stringify(d));} d.deposits=d.deposits||[];d.loans=d.loans||[];d.users=d.users||[]; return d;}
+async function switchMode(mode){if(isDeveloper()&&mode==='production')return alert('Developer is restricted to TEST mode. Owner/Staff production data cannot be opened from Developer mode.');if(mode!==appMode){appMode=mode;localStorage.setItem(MODE_KEY,mode);remoteReady=false;if(supabaseSession){await ensureRemoteState(mode)}else{db=getDBForMode(mode)};location.reload();}}
+function isDeveloper(){return current&&current.role==='Developer';}
+function ensureDevTestDB(){let d=JSON.parse(localStorage.getItem(TEST_KEY)||'null'); if(!d){d=defaultDB();d.users=[{u:'developer',pass:'dev1234',role:'Developer',access:['all']}];localStorage.setItem(TEST_KEY,JSON.stringify(d));} else if(!d.users.some(a=>a.u==='developer')){d.users.push({u:'developer',pass:'dev1234',role:'Developer',access:['all']});localStorage.setItem(TEST_KEY,JSON.stringify(d));} return d;}
+function resetTestData(){if(!isDeveloper())return alert('Developer only'); if(confirm('Reset all TEST data? Production data will NOT be affected.')){localStorage.removeItem(TEST_KEY);ensureDevTestDB();location.reload();}}
+
+let current=null;
+function localDateISO(date=new Date()){
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,'0');
+  const d=String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+const today=()=>localDateISO();
+function save(){
+  localStorage.setItem(
+    appMode==='test'?TEST_KEY:PROD_KEY,
+    JSON.stringify(db)
+  );
+}
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}
+async function login(){
+ try{
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;
+  if(!u||!p)return alert('Email and password are required');
+  if(u.toLowerCase()==='developer'){
+    appMode='test'; localStorage.setItem(MODE_KEY,'test'); db=ensureDevTestDB();
+    const x=db.users.find(a=>a.u==='developer'&&a.pass===p); if(!x)return alert('Developer password incorrect'); current=x; remoteReady=false;
+  }else{
+    const {data,error}=await supabaseClient.auth.signInWithPassword({email:u,password:p}); if(error)throw error;
+    supabaseSession=data.session; appMode='production'; localStorage.setItem(MODE_KEY,'production'); db=getDBForMode('production');
+    const ok=await ensureRemoteState('production'); if(!ok) throw new Error('Could not load finance data from Supabase');
+    const prof=db.users.find(x=>x.id===supabaseSession.user.id);
+    current=prof?{...prof,u:prof.username||u,email:u}:{id:supabaseSession.user.id,u:u,username:u,role:'Staff',access:[] ,email:u};
+    if(!prof) throw new Error('User profile not found. Create/activate the user profile in Supabase.');
+  }
+  localStorage.setItem('smf_logged_user',current.u); document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';
+  document.getElementById('who').textContent=(current.email||current.u)+' • '+current.role;document.getElementById('modeBadge').textContent=appMode==='test'?'🧪 TEST MODE':'🔒 PRODUCTION';document.getElementById('testBanner').style.display=appMode==='test'?'block':'none';
+  document.getElementById('staffMenu').style.display=current.role==='Owner'?'block':'none'; applyAccess();refresh();showPage('dashboard');
+ }catch(err){console.error(err);alert('Login failed / உள்நுழைவு தோல்வி\n'+(err.message||err));}
+}
+async function resetPassword(){
+ let email=prompt('Supabase account email / மின்னஞ்சல்'); if(!email)return;
+ try{
+  const {error}=await supabaseClient.auth.resetPasswordForEmail(email.trim());
+  if(error)throw error;
+  alert('Password reset email sent / கடவுச்சொல் மாற்ற email அனுப்பப்பட்டது');
+ }catch(err){alert('Reset failed / Reset தோல்வி\n'+(err.message||err));}
+}
+async function logout(){try{await supabaseClient.auth.signOut()}catch(e){console.error(e)} current=null;supabaseSession=null;remoteReady=false;localStorage.removeItem('smf_logged_user');document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex'}
+function applyAccess(){
+ document.querySelectorAll('aside button').forEach(b=>b.style.display='block');
+ if(current.role==='Owner'||current.role==='Developer')return;
+ document.querySelectorAll('aside button').forEach(b=>{
+  let pg=b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+  if(pg && !current.access.includes(pg))b.style.display='none';
+ });
+}
+let smfNavHandling=false;
+function showPage(id,btn,fromHistory=false){
+  const page=document.getElementById(id);
+  if(!page)return false;
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  page.classList.add('active');
+  if(btn){
+    document.querySelectorAll('aside button').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  if(window.innerWidth<=750) toggleMenu(false);
+  if(!fromHistory && !smfNavHandling){
+    try{history.pushState({smfPage:id},'',location.href.split('#')[0]+'#'+encodeURIComponent(id));}catch(e){}
+  }
+  try{refresh();}catch(e){console.error('Page refresh error:',e);}
+  window.scrollTo({top:0,behavior:'instant'});
+  return true;
+}
+
+(function(){
+  const initial=document.querySelector('.page.active')?.id || 'dashboard';
+  try{history.replaceState({smfPage:initial,smfRoot:true},'',location.href.split('#')[0]+'#'+encodeURIComponent(initial));}catch(e){}
+  window.addEventListener('popstate',function(ev){
+    let id=ev.state&&ev.state.smfPage;
+    if(!id){id=initial;try{history.replaceState({smfPage:initial,smfRoot:true},'',location.href.split('#')[0]+'#'+encodeURIComponent(initial));}catch(e){}}
+    const target=document.getElementById(id)||document.getElementById(initial);
+    smfNavHandling=true;
+    try{showPage(target.id,document.querySelector(`aside button[onclick*="'${target.id}'"]`),true);}finally{smfNavHandling=false;}
+  });
+})();
+function refresh(){normalizeDB();renderDashboard();renderParties();fillPartySelects();renderBills();renderDueDetails();renderUsers();renderDeposits();fillLoanParty();renderLoans();fillSanctionLoans();renderSanction();loadSettings();calcInterest();translateDom()}
+function ownerDepositBalance(){
+ let deposits=(db.deposits||[]).reduce((s,x)=>s+Number(x.amount||0),0);
+ let loans=(db.loans||[]).filter(x=>!x.cancelled).reduce((s,x)=>s+Number(x.amount||0),0);
+ let repayments=(db.payments||[]).reduce((s,x)=>s+Number(x.amount||0),0);
+ return deposits+repayments-loans;
+}
+function loanTotal(x){return Number(x.amount||0)+(Number(x.amount||0)*Number(x.rate||0)/100*(x.cycle==='weekly'?Number(x.period||0)/52:Number(x.period||0)/12));}
+function loanPayments(x){return (db.payments||[]).filter(p=>p.loanId===x.id).reduce((s,p)=>s+Number(p.amount||0),0)}
+function loanPaidDues(x){let total=loanTotal(x), dues=Math.max(1,Number(x.period||1)); return Math.min(dues,Math.floor((loanPayments(x)+0.0001)/(total/dues)))}
+function loanDueAmount(x){return Math.max(0,loanTotal(x)-loanPayments(x))}
+function loanInstallment(x){let dues=Math.max(1,Number(x.period||1));return loanTotal(x)/dues}
+function renderDashboard(){
+ let c=(db.loans||[]).reduce((s,x)=>s+Number(x.amount||0),0),p=(db.payments||[]).reduce((s,x)=>s+Number(x.amount||0),0);
+ let active=db.loans.filter(x=>!isOverdue(x)&&!x.closed).length, over=db.loans.filter(x=>isOverdue(x)&&!x.closed), bal=ownerDepositBalance();
+ dCredit.textContent=money(c);dPayment.textContent=money(p);dBalance.textContent=money(db.loans.reduce((s,x)=>s+loanDueAmount(x),0));dOwnerBalance.textContent=money(bal);dParties.textContent=db.parties.length;dLoans.textContent=active;dOverdue.textContent=over.length;
+ ownerBalanceBig.textContent=money(bal);
+ let history=[...(db.deposits||[]).map(x=>({...x,type:'Owner Deposit'})),...(db.loans||[]).map(x=>({...x,type:'Loan'})),...(db.payments||[]).map(x=>({...x,type:'Repayment'}))].sort((a,b)=>(b.date||b.start||'').localeCompare(a.date||a.start||'')).slice(0,12);
+ ownerBalanceHistory.innerHTML='<div class="tablewrap"><table><tr><th>Date</th><th>Type</th><th>Amount</th><th>Party</th></tr>'+history.map(x=>`<tr><td>${x.date||x.start||''}</td><td>${x.type}</td><td>${money(x.amount)}</td><td>${x.party?partyName(x.party):'-'}</td></tr>`).join('')+'</table></div>';
+ creditDetailSummary.innerHTML='<div class="tablewrap"><table><tr><th>Customer</th><th>Loan</th><th>Total Due</th><th>Paid Dues</th><th>Outstanding</th><th>Final Date</th></tr>'+db.loans.map(x=>`<tr><td>${partyName(x.party)}</td><td>${money(x.amount)}</td><td>${x.period||0}</td><td>${loanPaidDues(x)}/${x.period||0}</td><td>${money(loanDueAmount(x))}</td><td>${x.due||''}</td></tr>`).join('')+'</table></div>';
+ paymentDetailSummary.innerHTML='<div class="tablewrap"><table><tr><th>Customer</th><th>Repayment</th><th>Loan</th><th>Paid Dues</th><th>Due Amount</th></tr>'+db.loans.map(x=>`<tr><td>${partyName(x.party)}</td><td>${money(loanPayments(x))}</td><td>${money(x.amount)}</td><td>${loanPaidDues(x)}/${x.period||0}</td><td>${money(loanDueAmount(x))}</td></tr>`).join('')+'</table></div>';
+ let all=[...db.entries.map(x=>({...x,type:'Credit'})),...db.payments.map(x=>({...x,type:'Repayment'}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
+ recent.innerHTML=all.length?'<div class="tablewrap"><table><tr><th>Date</th><th>Party</th><th>Type</th><th>Amount</th></tr>'+all.map(x=>`<tr><td>${x.date}</td><td>${partyName(x.party)}</td><td>${x.type}</td><td>${money(x.amount)}</td></tr>`).join('')+'</table></div>':'No entries yet';
+ overdueList.innerHTML=over.length?'<div class="tablewrap"><table><tr><th>Customer</th><th>Amount</th><th>Due Date</th><th>Status</th></tr>'+over.map(x=>`<tr class="overdue"><td>${partyName(x.party)}</td><td>${money(loanDueAmount(x))}</td><td>${x.due}</td><td><span class="statusOver">OVERDUE / காலதாமதம்</span></td></tr>`).join('')+'</table></div>':'<span class="statusOk">No overdue customers / காலதாமதம் இல்லை</span>';
+}
+function isOverdue(x){return !!x.due && x.due < today() && !x.closed && loanDueAmount(x)>0}
+function partyName(id){return db.parties.find(x=>x.id===id)?.name||'Deleted / Unknown'}
+function openParty(id=null){
+ let x=db.parties.find(a=>a.id===id)||{};
+ modalContent.innerHTML=`<h2>${id?'Edit':'Add'} Party</h2><div class="formgrid"><input id="fName" placeholder="Party Name *" value="${x.name||''}"><input id="fPhone" placeholder="Phone / Contact Number" value="${x.phone||''}"><input id="fAadhaar" placeholder="Aadhaar Number" value="${x.aadhaar||''}"><input id="fAccount" placeholder="Account Number" value="${x.account||''}"><input id="fAddress" placeholder="Address" value="${x.address||''}"><input id="fNominee" placeholder="Nominee Name" value="${x.nominee||''}"><input id="fNPhone" placeholder="Nominee Phone" value="${x.nphone||''}"><input id="fNAddress" placeholder="Nominee Address" value="${x.naddress||''}"></div><div class="right"><button class="muted" onclick="closeModal()">Cancel</button> <button class="primary" onclick="saveParty('${id||''}')">Save Party</button></div>`;modal.classList.add('show')
+}
+async function saveParty(id){
+  const x={
+    id:id||crypto.randomUUID(),
+    name:fName.value.trim(),phone:fPhone.value,aadhaar:fAadhaar.value,
+    account:fAccount.value,address:fAddress.value,nominee:fNominee.value,
+    nphone:fNPhone.value,naddress:fNAddress.value
+  };
+  if(!x.name)return alert('Party name required');
+  try{
+    const row={
+      id:x.id,name:x.name,phone:x.phone||null,
+      aadhaar_number:x.aadhaar||null,account_number:x.account||null,
+      address:x.address||null,nominee_name:x.nominee||null,
+      nominee_phone:x.nphone||null,nominee_address:x.naddress||null,
+      created_by:currentUserId()
+    };
+    if(appMode==='production') await remoteUpsertOne('parties',row);
+    const i=db.parties.findIndex(a=>a.id===x.id);
+    if(i>=0)db.parties[i]=x; else db.parties.push(x);
+    save(); closeModal();
+    await refreshFromServer();
+  }catch(err){alert('Party save failed / சேமிப்பு தோல்வி\n'+err.message)}
+}
+function renderParties(){let q=(partySearch?.value||'').toLowerCase();let arr=db.parties.filter(x=>(x.name+x.phone).toLowerCase().includes(q));partyTable.innerHTML=arr.map(x=>{let ls=db.loans.filter(l=>l.party===x.id);let principal=ls.reduce((s,l)=>s+Number(l.amount||0),0),total=ls.reduce((s,l)=>s+loanTotal(l),0),paid=ls.reduce((s,l)=>s+loanPayments(l),0),due=Math.max(0,total-paid);return `<tr><td><button class="muted" onclick="showPartyLoans('${x.id}')">${x.name}</button></td><td>${x.phone}</td><td>${x.address}</td><td>${x.aadhaar}</td><td>${x.account}</td><td>${x.nominee}</td><td><b>Loan: ${money(principal)}</b><br>Total Payable: ${money(total)}<br>Paid: ${money(paid)}<br>Due: ${money(due)}<br>${ls.length?ls.map(l=>`${l.cycle==='monthly'?'Monthly':'Weekly'}: ${money(loanInstallment(l))} × ${l.period}<br>Due: ${l.due}<br>Paid Dues: ${loanPaidDues(l)}/${l.period}`).join('<hr>'):'-'}</td><td><button class="muted" onclick="openParty('${x.id}')">Edit</button> <button class="danger" onclick="delParty('${x.id}')">Delete</button></td></tr>`}).join('')}
+function showPartyLoans(id){let p=db.parties.find(x=>x.id===id);if(!p)return;let ls=db.loans.filter(x=>x.party===id);showPage('creditDetails');let principal=ls.reduce((s,x)=>s+Number(x.amount||0),0),total=ls.reduce((s,x)=>s+loanTotal(x),0),paid=ls.reduce((s,x)=>s+loanPayments(x),0),due=Math.max(0,total-paid);creditDetailSummary.innerHTML='<h3>'+p.name+'</h3><div class="card"><b>Total Loan: </b>'+money(principal)+' &nbsp; <b>Total Payable: </b>'+money(total)+' &nbsp; <b>Total Paid: </b>'+money(paid)+' &nbsp; <b>Total Due: </b>'+money(due)+'</div><div class="tablewrap"><table><tr><th>Loan</th><th>Total Payable</th><th>Installment</th><th>Due Date</th><th>Total Dues</th><th>Paid Dues</th><th>Remaining Dues</th><th>Paid Amount</th><th>Due Amount</th></tr>'+ls.map(x=>'<tr><td>'+money(x.amount)+'</td><td>'+money(loanTotal(x))+'</td><td>'+money(loanInstallment(x))+' / '+(x.cycle==='monthly'?'Month':'Week')+'</td><td>'+x.due+'</td><td>'+x.period+'</td><td>'+loanPaidDues(x)+'</td><td>'+Math.max(0,(x.period||0)-loanPaidDues(x))+'</td><td>'+money(loanPayments(x))+'</td><td>'+money(loanDueAmount(x))+'</td></tr>').join('')+'</table></div>';}
+async function delParty(id){
+  if(!confirm('Delete this party?'))return;
+  try{
+    if(appMode==='production') await remoteDeleteOne('parties',id);
+    db.parties=db.parties.filter(x=>x.id!==id);
+    save(); await refreshFromServer();
+  }catch(err){alert('Delete failed / நீக்குதல் தோல்வி\n'+err.message)}
+}
+function fillLoanParty(){if(!lParty)return;let old=lParty.value;lParty.innerHTML='<option value="">Select Party / வாடிக்கையாளர்</option>'+db.parties.map(x=>`<option value="${x.id}">${x.name} - ${x.phone||''}</option>`).join('');lParty.value=old}
+function fillPartySelects(){[eParty,pParty].forEach(s=>{if(!s)return;let old=s.value;s.innerHTML='<option value="">Select Party</option>'+db.parties.map(x=>`<option value="${x.id}">${x.name} - ${x.phone||''}</option>`).join('');s.value=old});fillPaymentLoans()}
+function fillPaymentLoans(){if(!pLoan)return;let old=pLoan.value;pLoan.innerHTML='<option value="">Select Loan / கடன்</option>'+db.loans.filter(x=>x.party===pParty.value&&!x.closed).map(x=>`<option value="${x.id}">${partyName(x.party)} • ${money(x.amount)} • Due ${x.due} • ${loanPaidDues(x)}/${x.period} paid</option>`).join('');pLoan.value=old}
+function suggestEntryDueDate(){if(!eDate.value||!ePeriod.value)return;let d=new Date(eDate.value+'T00:00:00');if(eCycle.value==='weekly')d.setDate(d.getDate()+Number(ePeriod.value)*7);else d.setMonth(d.getMonth()+Number(ePeriod.value));eDue.value=d.toISOString().slice(0,10)}
+function calcEntryInstallment(){
+ let amount=Number(eAmount?.value||0),rate=Number(eRate?.value||0),period=Math.max(1,Number(ePeriod?.value||1));
+ let total=amount+(amount*rate/100*(eCycle?.value==='weekly'?period/52:period/12));
+ if(eInstallment)eInstallment.value=amount?money(total/period):'';
+}
+function calcLoanInstallment(){
+ let amount=Number(lAmount?.value||0),rate=Number(lRate?.value||0),period=Math.max(1,Number(lPeriod?.value||1));
+ let total=amount+(amount*rate/100*(lCycle?.value==='weekly'?period/52:period/12));
+ if(lInstallment)lInstallment.value=amount?money(total/period):'';
+}
+async function addEntry(){
+  const party=document.getElementById('eParty')?.value||'';
+  const amount=Number(document.getElementById('eAmount')?.value||0);
+  const rate=Number(document.getElementById('eRate')?.value||0);
+  const cycle=document.getElementById('eCycle')?.value||'monthly';
+  const period=Number(document.getElementById('ePeriod')?.value||0);
+  const date=document.getElementById('eDate')?.value||today();
+  const due=document.getElementById('eDue')?.value||'';
+  const note=document.getElementById('eNote')?.value||'';
+  if(!party||amount<=0||period<=0||!due)return alert('Party, amount, due period and final due date required');
+  if(ownerDepositBalance()<amount)return alert('Insufficient Owner Deposit available balance');
+  normalizeDB();
+
+  const entryId=crypto.randomUUID();
+  const loanId=crypto.randomUUID();
+
+  const entry={id:entryId,party,partyId:party,amount,rate,cycle,period,date,due,note,user:current?.u||'owner'};
+  const loan={id:loanId,party,partyId:party,amount,rate,cycle,period,start:date,due,note,user:current?.u||'owner',closed:false,sourceEntryId:entryId};
+
+  try{
+    if(appMode==='production'){
+      await remoteInsertOne('credit_entries',{
+        id:entryId,party_id:party,amount,rate,cycle,period,
+        entry_date:date,due_date:due,notes:note||null,created_by:currentUserId()
+      });
+      try{
+        await remoteInsertOne('loans',{
+          id:loanId,party_id:party,amount,rate,cycle,period,
+          start_date:date,due_date:due,closed:false,
+          notes:note||null,source_entry_id:entryId,created_by:currentUserId()
+        });
+      }catch(err){
+        await remoteDeleteOne('credit_entries',entryId).catch(()=>{});
+        throw err;
+      }
+    }
+
+    db.entries.push(entry);
+    db.loans.push(loan);
+    save();
+    await refreshFromServer();
+  }catch(err){
+    console.error('Credit Entry save error:',err);
+    db.entries=db.entries.filter(x=>x.id!==entryId);
+    db.loans=db.loans.filter(x=>x.id!==loanId);
+    save();
+    return alert('Save failed / சேமிப்பு தோல்வி\n'+err.message);
+  }
+
+  document.getElementById('eAmount').value='';
+  document.getElementById('eRate').value='';
+  document.getElementById('eNote').value='';
+  calcEntryInstallment();
+  refresh();
+  alert('Credit / Loan saved successfully / வரவு மற்றும் கடன் பதிவு செய்யப்பட்டது');
+}
+function suggestDueDate(){if(!lStart.value||!lPeriod.value)return;lPeriod.value=Math.max(1,Number(lPeriod.value));let d=new Date(lStart.value+'T00:00:00');if(lCycle.value==='weekly')d.setDate(d.getDate()+Number(lPeriod.value)*7);else d.setMonth(d.getMonth()+Number(lPeriod.value));lDue.value=d.toISOString().slice(0,10)}
+async function addLoan(){
+  if(!lParty.value||!lAmount.value||!lPeriod.value||!lDue.value)
+    return alert('Customer, amount, due period and final date required');
+  const amount=Number(lAmount.value);
+  if(!Number.isFinite(amount)||amount<=0)return alert('Loan amount must be greater than 0');
+  if(ownerDepositBalance()<amount)return alert('Insufficient Owner Deposit available balance');
+
+  const id=crypto.randomUUID();
+  const loan={
+    id,party:lParty.value,partyId:lParty.value,amount,
+    rate:Number(lRate.value)||0,cycle:lCycle.value,
+    period:Number(lPeriod.value),start:lStart.value||today(),
+    due:lDue.value,note:lNote.value,user:current.u,closed:false
+  };
+
+  try{
+    if(appMode==='production'){
+      await remoteInsertOne('loans',{
+        id,party_id:loan.party,amount:loan.amount,rate:loan.rate,
+        cycle:loan.cycle,period:loan.period,start_date:loan.start,
+        due_date:loan.due,closed:false,notes:loan.note||null,
+        created_by:currentUserId()
+      });
+    }
+    db.loans.push(loan); save(); await refreshFromServer();
+    lAmount.value='';lNote.value='';refresh();
+    alert('Loan saved / கடன் பதிவு செய்யப்பட்டது');
+  }catch(err){
+    db.loans=db.loans.filter(x=>x.id!==id);save();
+    alert('Loan save failed / கடன் சேமிப்பு தோல்வி\n'+err.message);
+  }
+}
+function renderLoans(){if(!loanTable)return;let q=(loanSearch?.value||'').toLowerCase();let arr=db.loans.filter(x=>partyName(x.party).toLowerCase().includes(q)).slice().reverse();loanTable.innerHTML=arr.length?arr.map(x=>{let over=isOverdue(x);return `<tr class="${over?'overdue':''}"><td>${partyName(x.party)}</td><td>${money(x.amount)}</td><td>${x.rate}%</td><td>${x.cycle==='weekly'?'Weekly':'Monthly'}</td><td>${x.period}</td><td>${loanPaidDues(x)}/${x.period}</td><td>${money(loanDueAmount(x))}</td><td>${x.start}</td><td><b>${x.due}</b></td><td>${x.closed?`<span class="statusOk">Closed</span>`:over?`<span class="statusOver">OVERDUE</span>`:`<span class="statusOk">Active</span>`}</td><td>${!x.closed?`<button class="yellow" onclick="closeLoan('${x.id}')">Close</button>`:''} <button class="danger" onclick="deleteLoan('${x.id}')">Delete</button></td></tr>`}).join(''):`<tr><td colspan="11">No loans</td></tr>`}
+async function closeLoan(id){
+  const x=db.loans.find(a=>a.id===id);
+  if(!x||!confirm('Mark this loan as closed?'))return;
+  try{
+    if(appMode==='production')
+      await remoteUpsertOne('loans',{
+        id:x.id,party_id:x.partyId||x.party,amount:Number(x.amount),
+        rate:Number(x.rate||0),cycle:x.cycle||'monthly',period:Number(x.period||0),
+        start_date:x.start||today(),due_date:x.due||null,closed:true,
+        notes:x.note||null,source_entry_id:x.sourceEntryId||null,
+        created_by:x.created_by||currentUserId()
+      });
+    x.closed=true;save();await refreshFromServer();
+  }catch(err){alert('Close failed / முடித்தல் தோல்வி\n'+err.message)}
+}
+async function deleteLoan(id){
+  if(!confirm('Delete this loan?'))return;
+  try{
+    if(appMode==='production') await remoteDeleteOne('loans',id);
+    db.loans=db.loans.filter(x=>x.id!==id);save();await refreshFromServer();
+  }catch(err){alert('Delete failed / நீக்குதல் தோல்வி\n'+err.message)}
+}
+async function makePayment(){
+  if(!pParty.value||!pLoan.value||!pAmount.value)return alert('Party, loan and amount required');
+  const loan=db.loans.find(x=>x.id===pLoan.value);
+  if(!loan)return alert('Loan not found');
+
+  const amount=Number(pAmount.value);
+  if(!Number.isFinite(amount)||amount<=0)return alert('Payment amount must be greater than 0');
+  if(amount>loanDueAmount(loan))return alert('Payment is more than outstanding due amount');
+
+  const x={
+    id:crypto.randomUUID(),loanId:loan.id,party:pParty.value,
+    partyId:pParty.value,amount,date:pDate.value||today(),
+    type:pType.value,note:pNote.value,user:current.u
+  };
+
+  try{
+    if(appMode==='production'){
+      await remoteInsertOne('payments',{
+        id:x.id,party_id:x.party,loan_id:x.loanId,amount:x.amount,
+        payment_date:x.date,payment_method:x.type||null,
+        payment_type:x.type||null,notes:x.note||null,
+        created_by:currentUserId()
+      });
+    }
+
+    db.payments.push(x);
+    const newDue=loanDueAmount({...loan});
+    if(newDue<=0){
+      loan.closed=true;
+      if(appMode==='production'){
+        await remoteUpsertOne('loans',{
+          id:loan.id,party_id:loan.partyId||loan.party,
+          amount:Number(loan.amount),rate:Number(loan.rate||0),
+          cycle:loan.cycle||'monthly',period:Number(loan.period||0),
+          start_date:loan.start||today(),due_date:loan.due||null,closed:true,
+          notes:loan.note||null,source_entry_id:loan.sourceEntryId||null,
+          created_by:loan.created_by||currentUserId()
+        });
+      }
+    }
+
+    save();renderSlip(x);pAmount.value='';pNote.value='';
+    await refreshFromServer();refresh();
+  }catch(err){
+    db.payments=db.payments.filter(z=>z.id!==x.id);
+    save();
+    alert('Payment failed / கட்டணம் சேமிக்கப்படவில்லை\n'+err.message);
+  }
+}
+function renderSlip(x){let p=db.parties.find(a=>a.id===x.party)||{},loan=db.loans.find(a=>a.id===x.loanId)||{},paid=loanPayments(loan),paidDues=loanPaidDues(loan);let html=`<div class="slip" id="slip"><h2>${db.settings.ta}</h2><div style="text-align:center">${db.settings.en}</div><div class="line"></div><div class="sliprow"><b>Payment Receipt</b><span>No: ${x.id.slice(-8)}</span></div><div class="sliprow"><span>Date</span><b>${x.date}</b></div><div class="sliprow"><span>Party</span><b>${p.name||''}</b></div><div class="sliprow"><span>Loan Amount</span><b>${money(loan.amount)}</b></div><div class="sliprow"><span>Repayment Type</span><b>${loan.cycle==='weekly'?'Weekly':'Monthly'}</b></div><div class="sliprow"><span>Total Dues</span><b>${loan.period||0}</b></div><div class="sliprow"><span>Paid Dues</span><b>${paidDues} / ${loan.period||0}</b></div><div class="sliprow"><span>Remaining Dues</span><b>${Math.max(0,(loan.period||0)-paidDues)}</b></div><div class="sliprow"><span>Final Due / Close Date</span><b>${loan.due||''}</b></div><div class="line"></div><div class="sliprow" style="font-size:20px"><span>Current Payment / தொகை</span><b>${money(x.amount)}</b></div><div class="sliprow"><span>Total Repaid</span><b>${money(paid)}</b></div><div class="sliprow"><span>Outstanding Due</span><b>${money(loanDueAmount(loan))}</b></div><div class="line"></div><div class="signrow"><div class="signbox">Party Signature<br><br>________________</div><div class="signbox">Received By / Receiver Signature<br><br>________________</div></div><p style="text-align:center;font-size:11px;position:absolute;left:5mm;right:5mm;bottom:1mm">Computer generated repayment receipt.</p></div><div class="toolbar" style="justify-content:center;margin-top:10px"><button class="primary" onclick="downloadSlip()">Download PDF</button><button class="yellow" onclick="viewSlip()">View / Print</button></div>`;slipPreview.innerHTML=html}
+function viewSlip(){let s=document.getElementById('slip');printArea.innerHTML=s.outerHTML;window.print()}
+async function downloadSlip(){
+  const s=document.getElementById('slip');
+  if(!s)return;
+  await downloadElementPDF(s,'Payment_Receipt_'+Date.now()+'.pdf','landscape',[150,80]);
+}
+async function addDeposit(){
+  const amount=Number(depAmount.value);
+  if(!Number.isFinite(amount)||amount<=0)return alert('Amount must be greater than 0');
+
+  const x={
+    id:crypto.randomUUID(),amount,date:depDate.value||today(),
+    bank:depBank.value,note:depNote.value,user:current.u
+  };
+
+  try{
+    if(appMode==='production'){
+      await remoteInsertOne('deposits',{
+        id:x.id,amount:x.amount,deposit_date:x.date,
+        bank:x.bank||null,notes:x.note||null,created_by:currentUserId()
+      });
+    }
+    db.deposits.push(x);save();
+    depAmount.value='';depBank.value='';depNote.value='';
+    await refreshFromServer();renderDeposits();
+  }catch(err){
+    db.deposits=db.deposits.filter(z=>z.id!==x.id);save();
+    alert('Deposit save failed / வைப்பு சேமிப்பு தோல்வி\n'+err.message);
+  }
+}
+function renderDeposits(){let a=db.deposits||[];depositTable.innerHTML=a.length?'<div class="tablewrap"><table><tr><th>Date</th><th>Amount</th><th>Bank</th><th>User</th></tr>'+a.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${money(x.amount)}</td><td>${x.bank||''}</td><td>${x.user}</td></tr>`).join('')+'</table></div>':'No deposits / வைப்பு இல்லை';}
+function allStatementRows(){
+  normalizeDB();
+  const rows=[];
+  db.entries.forEach(x=>rows.push({date:x.date||'',party:partyName(x.party),type:'Credit / Loan',amount:Number(x.amount||0),user:x.user||'',details:(x.cycle==='weekly'?'Weekly':'Monthly')+' • '+(x.period||0)+' dues'}));
+  db.payments.forEach(x=>rows.push({date:x.date||'',party:partyName(x.party),type:'Repayment',amount:Number(x.amount||0),user:x.user||'',details:x.type||''}));
+  db.deposits.forEach(x=>rows.push({date:x.date||'',party:'Owner',type:'Owner Deposit',amount:Number(x.amount||0),user:x.user||'',details:x.bank||''}));
+  return rows.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+function statementModeChanged(){
+  const m=document.getElementById('statementMode')?.value||'date';
+  document.getElementById('fromDate').parentElement.style.display=m==='date'?'block':'none';
+  document.getElementById('toDate').parentElement.style.display=m==='date'?'block':'none';
+  document.getElementById('statementMonth').parentElement.style.display=m==='month'?'block':'none';
+  document.getElementById('statementYear').parentElement.style.display=m==='year'?'block':'none';
+}
+function filteredStatementRows(){
+  const rows=allStatementRows(), m=document.getElementById('statementMode')?.value||'date';
+  if(m==='month'){
+    const v=document.getElementById('statementMonth')?.value||''; return v?rows.filter(x=>x.date.startsWith(v)):rows;
+  }
+  if(m==='year'){
+    const v=String(document.getElementById('statementYear')?.value||''); return v?rows.filter(x=>x.date.startsWith(v)):rows;
+  }
+  const f=document.getElementById('fromDate')?.value||'', t=document.getElementById('toDate')?.value||'';
+  return rows.filter(x=>(!f||x.date>=f)&&(!t||x.date<=t));
+}
+function statementPeriod(){
+  const m=document.getElementById('statementMode')?.value||'date';
+  let from='',to='';
+  if(m==='month'){
+    const v=document.getElementById('statementMonth')?.value||'';
+    if(v){from=v+'-01';const d=new Date(from+'T00:00:00');d.setMonth(d.getMonth()+1);d.setDate(0);to=d.toISOString().slice(0,10)}
+  }else if(m==='year'){
+    const v=String(document.getElementById('statementYear')?.value||'');
+    if(v){from=v+'-01-01';to=v+'-12-31'}
+  }else{
+    from=document.getElementById('fromDate')?.value||'';to=document.getElementById('toDate')?.value||'';
+  }
+  return {from,to};
+}
+function statementAccounting(){
+  const rows=allStatementRows(), period=statementPeriod();
+  const from=period.from||rows.length?period.from:((rows.length?rows[rows.length-1].date:''));
+  const to=period.to||today();
+  const before=rows.filter(x=>from && x.date<from);
+  const selected=rows.filter(x=>(!period.from||x.date>=period.from)&&(!period.to||x.date<=period.to));
+  const sumType=(arr,type)=>arr.filter(x=>x.type===type).reduce((s,x)=>s+x.amount,0);
+  const opening=sumType(before,'Owner Deposit')+sumType(before,'Repayment')-sumType(before,'Credit / Loan');
+  const deposits=sumType(selected,'Owner Deposit');
+  const repayments=sumType(selected,'Repayment');
+  const loans=sumType(selected,'Credit / Loan');
+  const closing=opening+deposits+repayments-loans;
+  return {rows:selected,from:period.from||'',to:period.to||'',opening,deposits,repayments,loans,closing};
+}
+function renderBills(){
+  if(!document.getElementById('billTable'))return;
+  const a=statementAccounting(), rows=a.rows;
+  const sm=document.getElementById('statementSummary');
+  if(sm)sm.innerHTML=`<div class="grid"><div class="card"><b>Opening Balance</b><h3>${money(a.opening)}</h3></div><div class="card"><b>Owner Deposits</b><h3>${money(a.deposits)}</h3></div><div class="card"><b>Repayments</b><h3>${money(a.repayments)}</h3></div><div class="card"><b>Loans / Credit</b><h3>${money(a.loans)}</h3></div><div class="card"><b>Closing Balance</b><h3>${money(a.closing)}</h3></div></div><div class="card" style="margin-top:10px"><b>Accounting Formula:</b> Opening + Deposits + Repayments − Loans = <b>${money(a.closing)}</b></div>`;
+  billTable.innerHTML=rows.length?rows.map(x=>`<tr><td>${x.date}</td><td>${x.party}</td><td>${x.type}</td><td>${money(x.amount)}</td><td>${x.user}</td><td>${x.details}</td></tr>`).join(''):`<tr><td colspan="6">No transactions for selected period</td></tr>`;
+}
+function csvEscape(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+function downloadBlob(content,name,type){const blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function exportCSV(){const a=statementAccounting();let csv='Statement,Value\nOpening Balance,'+csvEscape(a.opening)+'\nOwner Deposits,'+csvEscape(a.deposits)+'\nRepayments,'+csvEscape(a.repayments)+'\nLoans / Credit,'+csvEscape(a.loans)+'\nClosing Balance,'+csvEscape(a.closing)+'\n\nDate,Party,Type,Amount,User,Details\n'+a.rows.map(x=>[x.date,x.party,x.type,x.amount,x.user,x.details].map(csvEscape).join(',')).join('\n');downloadBlob(csv,'Senthoor_Murugan_Statement.csv','text/csv;charset=utf-8')}
+function exportStatementPDF(){const a=statementAccounting();makePDFReport(a.rows,'Statement / அறிக்கை','Senthoor_Murugan_Statement_'+Date.now()+'.pdf',a)}
+async function makePDFReport(rows,title,filename,acct){
+  const wrapper=document.createElement('div');
+  wrapper.style.cssText='background:#fff;color:#111;padding:10mm;width:277mm;font-family:Arial,sans-serif;font-size:12px;';
+  let summary='';
+  if(acct){
+    summary='<div style="display:flex;gap:12px;flex-wrap:wrap;margin:10px 0"><b>Opening: '+money(acct.opening)+'</b><b>Deposits: '+money(acct.deposits)+'</b><b>Repayments: '+money(acct.repayments)+'</b><b>Loans: '+money(acct.loans)+'</b><b>Closing: '+money(acct.closing)+'</b></div>';
+  }
+  const escPdf=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  wrapper.innerHTML='<h2 style="text-align:center;margin:0">Senthoor Murugan Finance</h2><h3 style="text-align:center">'+escPdf(title)+'</h3>'+summary+
+    '<table style="width:100%;border-collapse:collapse"><thead><tr>'+['Date','Party','Type','Amount','User','Details'].map(h=>'<th style="border:1px solid #888;padding:6px;text-align:left;background:#eee">'+h+'</th>').join('')+'</tr></thead><tbody>'+
+    rows.map(r=>'<tr>'+[r.date,r.party,r.type,money(r.amount),r.user,r.details].map(v=>'<td style="border:1px solid #aaa;padding:6px">'+escPdf(v)+'</td>').join('')+'</tr>').join('')+
+    '</tbody></table>';
+  document.body.appendChild(wrapper);
+  try{await downloadElementPDF(wrapper,filename,'landscape','a4');}finally{wrapper.remove();}
+}
+function renderDueDetails(){
+  const box=document.getElementById('dueTable'),sum=document.getElementById('dueSummary');if(!box)return;
+  const arr=db.loans.filter(x=>!x.closed&&loanDueAmount(x)>0).map(x=>({x,paid:loanPayments(x),due:loanDueAmount(x),remaining:Math.max(0,(x.period||0)-loanPaidDues(x))}));
+  const total=arr.reduce((s,a)=>s+a.due,0);if(sum)sum.innerHTML=`<h2>${money(total)}</h2><p>${arr.length} customer(s) have outstanding dues.</p>`;
+  box.innerHTML=arr.length?'<div class="tablewrap"><table><tr><th>Customer</th><th>Phone</th><th>Loan</th><th>Total Payable</th><th>Paid</th><th>Due Amount</th><th>Remaining Dues</th><th>Final Due</th><th>Status</th></tr>'+arr.map(a=>{const p=db.parties.find(z=>z.id===a.x.party)||{};return `<tr class="${isOverdue(a.x)?'overdue':''}"><td><b>${p.name||'-'}</b></td><td>${p.phone||'-'}</td><td>${money(a.x.amount)}</td><td>${money(loanTotal(a.x))}</td><td>${money(a.paid)}</td><td><b>${money(a.due)}</b></td><td>${a.remaining}</td><td>${a.x.due||''}</td><td>${isOverdue(a.x)?'<span class="statusOver">OVERDUE</span>':'<span class="statusOk">PENDING</span>'}</td></tr>`}).join('')+'</table></div>':'<span class="statusOk">No outstanding dues</span>';
+}
+function exportDueCSV(){const arr=db.loans.filter(x=>!x.closed&&loanDueAmount(x)>0);let csv='Customer,Phone,Loan,Total Payable,Paid,Due Amount,Remaining Dues,Final Due,Status\n'+arr.map(x=>{const p=db.parties.find(z=>z.id===x.party)||{};return [p.name,p.phone,x.amount,loanTotal(x),loanPayments(x),loanDueAmount(x),Math.max(0,(x.period||0)-loanPaidDues(x)),x.due,isOverdue(x)?'OVERDUE':'PENDING'].map(csvEscape).join(',')}).join('\n');downloadBlob(csv,'Senthoor_Murugan_Total_Due.csv','text/csv;charset=utf-8')}
+function exportDuePDF(){const arr=db.loans.filter(x=>!x.closed&&loanDueAmount(x)>0).map(x=>{const p=db.parties.find(z=>z.id===x.party)||{};return {date:x.due,party:p.name||'',type:'Outstanding Due',amount:loanDueAmount(x),user:x.user||'',details:(isOverdue(x)?'OVERDUE':'PENDING')+' • '+Math.max(0,(x.period||0)-loanPaidDues(x))+' dues remaining'}});makePDFReport(arr,'Total Due / நிலுவை','Senthoor_Murugan_Total_Due_'+Date.now()+'.pdf')}
+async function changeMyPassword(){
+  if(!supabaseSession)return alert('Please sign in with Supabase first');
+  const np=prompt('New password');
+  if(!np||np.length<6)return alert('Password must be at least 6 characters');
+  try{
+    const {error}=await supabaseClient.auth.updateUser({password:np});
+    if(error)throw error;
+    alert('Password changed successfully / கடவுச்சொல் மாற்றப்பட்டது');
+  }catch(err){alert('Password change failed\n'+err.message)}
+}
+async function resetAllDataSecure(){
+  if(!current||!['Owner','Developer'].includes(current.role))return alert('Owner / Developer only');
+  if(appMode==='test'){
+    if(!confirm('Reset all TEST data?'))return;
+    localStorage.removeItem(TEST_KEY);ensureDevTestDB();location.reload();return;
+  }
+  if(!confirm('FINAL WARNING: This will permanently delete finance records. Continue?'))return;
+  alert('For production reset, use Supabase SQL / Owner-only admin procedure. This browser does not store or compare passwords.');
+}
+function calcInterest(){let p=+cPrincipal.value||0,r=+cRate.value||0,m=+cMonths.value||0,i=p*r/100*m;cInterest.textContent=money(i);cTotal.textContent=money(p+i)}
+function openUser(){
+ modalContent.innerHTML=`<h2>Create Staff / User</h2><input id="uName" placeholder="Username"><input id="uPass" placeholder="Password"><select id="uRole"><option>Staff</option><option>Manager</option></select>
+ <h3>Access</h3><div class="formgrid">${[['dashboard','Dashboard'],['parties','Parties'],['entry','Credit / வரவு'],['payments','Payment Slip'],['bills','Bills / Reports'],['interest','Interest Calculator']].map(a=>`<label><input class="acc" type="checkbox" value="${a[0]}" checked> ${a[1]}</label>`).join('')}</div>
+ <div class="right"><button class="muted" onclick="closeModal()">Cancel</button> <button class="primary" onclick="saveUser()">Create</button></div>`;modal.classList.add('show')
+}
+function saveUser(){let u=uName.value.trim(),p=uPass.value;if(!u||!p)return alert('Username/password required');if(db.users.some(x=>x.u===u))return alert('Username already exists');db.users.push({u,pass:p,role:uRole.value,access:[...document.querySelectorAll('.acc:checked')].map(x=>x.value)});save();closeModal();renderUsers()}
+function renderUsers(){if(!userTable)return;userTable.innerHTML=db.users.map((x,i)=>`<tr><td>${x.u}</td><td>${x.role}</td><td>${x.access.includes('all')?'All':x.access.join(', ')}</td><td>${x.u!=='owner'?`<button class="danger" onclick="deleteUser(${i})">Delete</button>`:'Protected'}</td></tr>`).join('')}
+function deleteUser(i){if(confirm('Delete user?')){db.users.splice(i,1);save();renderUsers()}}
+function closeModal(){modal.classList.remove('show')}
+async function saveSettings(){
+  db.settings.ta=sTamil.value;db.settings.en=sEnglish.value;save();
+  try{
+    if(appMode==='production'){
+      await remoteUpsertOne('finance_settings',{
+        id:1,finance_name_ta:db.settings.ta,
+        finance_name_en:db.settings.en,
+        address:db.settings.address||null,
+        phone:db.settings.phone||null,
+        updated_by:currentUserId()
+      });
+    }
+    await refreshFromServer();alert('Saved / சேமிக்கப்பட்டது');
+  }catch(err){alert('Settings save failed\n'+err.message)}
+}
+function loadSettings(){sTamil.value=db.settings.ta;sEnglish.value=db.settings.en;apiUrl.value=db.settings.api||''}
+function saveApi(){db.settings.api=apiUrl.value.trim();save();alert('API URL saved. Connect your backend using the documented REST endpoints in your server.')}
+function toggleMenu(force){
+ let a=document.querySelector('aside'),o=document.getElementById('menuOverlay');
+ let open=force===undefined?!a.classList.contains('open'):force;
+ a.classList.toggle('open',open);o.classList.toggle('show',open);
+}
+document.querySelectorAll('aside button').forEach(b=>b.addEventListener('click',()=>{if(window.innerWidth<=750)toggleMenu(false)}));
+/* Mobile: no page-changing left/right swipe. Horizontal swipes are reserved
+   for wide tables, while vertical scrolling remains normal. */
+
+
+const LANG_KEY='smf_language';
+const T={
+ ta:{dash:'டாஷ்போர்டு',noover:'காலதாமதமான வாடிக்கையாளர்கள் இல்லை',over:'காலதாமதம்',active:'நடப்பு',closed:'முடிந்தது',noLoans:'கடன்கள் இல்லை'},
+ en:{dash:'Dashboard',noover:'No overdue customers',over:'OVERDUE',active:'Active',closed:'Closed',noLoans:'No loans'}
+};
+function setLang(lang,btn){
+ localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang==='ta'?'ta':'en';
+ document.querySelectorAll('[data-ta][data-en]').forEach(el=>el.textContent=el.getAttribute('data-'+lang));
+ document.getElementById('dashTitle').textContent=T[lang].dash;
+ document.querySelectorAll('.langBtn').forEach(x=>x.classList.remove('active'));(btn||document.getElementById(lang==='ta'?'taBtn':'enBtn')).classList.add('active');
+ renderDashboard();renderParties();renderBills();renderLoans();renderDeposits();renderSanction();translateDom();
+}
+function tr(ta,en){return localStorage.getItem(LANG_KEY)==='ta'?ta:en}
+function translateDom(){
+ const ta=localStorage.getItem(LANG_KEY)==='ta';
+ const pairs=[
+ ['Dashboard / டாஷ்போர்டு','Dashboard','டாஷ்போர்டு'],['Quick Entry / விரைவு பதிவு','Quick Entry','விரைவு பதிவு'],
+ ['Overdue Customers / காலதாமதமான வாடிக்கையாளர்கள்','Overdue Customers','காலதாமதமான வாடிக்கையாளர்கள்'],['Recent Entries / சமீபத்திய பதிவுகள்','Recent Entries','சமீபத்திய பதிவுகள்'],
+ ['Customer Loan / வாடிக்கையாளர் கடன்','Customer Loan','வாடிக்கையாளர் கடன்'],['Payment Slip / Payment Entry','Payment Slip / Payment Entry','Payment Slip / Payment Entry'],
+ ['Owner Deposit / உரிமையாளர் வைப்பு','Owner Deposit','உரிமையாளர் வைப்பு'],['Bills / Reports','Bills / Reports','பில்கள் / அறிக்கைகள்'],
+ ['Staff / Users','Staff / Users','பணியாளர் / பயனர்கள்'],['Settings','Settings','அமைப்புகள்'],
+ ['Save Loan / கடன் பதிவு','Save Loan','கடன் பதிவு'],['Payment Slips','Payment Slips','Payment Slip'],
+ ['Credit Entry','Credit Entry','வரவு பதிவு'],['Customer Loans','Customer Loans','வாடிக்கையாளர் கடன்கள்'],
+ ['Select Party / வாடிக்கையாளர்','Select Party','வாடிக்கையாளரை தேர்வு செய்யவும்'],['Select Loan','Select Loan','கடனை தேர்வு செய்யவும்'],
+ ['No overdue customers / காலதாமதம் இல்லை','No overdue customers','காலதாமதமான வாடிக்கையாளர்கள் இல்லை'],
+ ['OVERDUE / காலதாமதம்','OVERDUE','காலதாமதம்'],['Active / நடப்பு','Active','நடப்பு'],['Closed / முடிந்தது','Closed','முடிந்தது'],
+ ['No loans / கடன்கள் இல்லை','No loans','கடன்கள் இல்லை'],['No entries yet','No entries yet','பதிவுகள் இல்லை'],
+ ['Credit','Credit','வரவு'],['Payment','Payment','செலுத்தியது'],['Delete','Delete','நீக்கு'],['Edit','Edit','திருத்து'],['Close','Close','முடி']
+ ];
+ document.querySelectorAll('body *').forEach(el=>{
+   if(el.children.length===0 && !['SCRIPT','STYLE'].includes(el.tagName)){
+     let t=el.textContent;
+     pairs.forEach(([both,en,taText])=>{ if(t.trim()===both) el.textContent=ta?taText:en; });
+   }
+ });
+}
+function fillSanctionLoans(){if(!sLoan)return;let old=sLoan.value;sLoan.innerHTML='<option value="">'+tr('கடனை தேர்வு செய்யவும்','Select Loan')+'</option>'+db.loans.slice().reverse().map(x=>`<option value="${x.id}">${partyName(x.party)} - ${money(x.amount)} - ${x.due}</option>`).join('');sLoan.value=old}
+function renderSanction(){
+ if(!sLoan)return;fillSanctionLoans();let x=db.loans.find(a=>a.id===sLoan.value);if(!x){sanctionPreview.innerHTML='<div class="card">'+tr('கடனை தேர்வு செய்யவும்','Select a loan')+'</div>';return}
+ let p=db.parties.find(a=>a.id===x.party)||{}, ref='SMF-'+x.id.slice(-8), lang=localStorage.getItem(LANG_KEY)||'en';
+ let interest=loanTotal(x)-Number(x.amount||0), total=loanTotal(x), paid=loanPaidDues(x), remaining=Math.max(0,(x.period||0)-paid), outstanding=loanDueAmount(x);
+ sanctionPreview.innerHTML=`<div class="legalLetter" id="sanctionLetter">
+ <div class="legalHead"><h1>${db.settings.ta}</h1><h2>${db.settings.en}</h2><div>${tr('தனியார் நிதி நிறுவனம்','Private Finance Company')}</div></div>
+ <div class="legalRef"><span>Ref No: <b>${ref}</b></span><span>Date: <b>${today()}</b></span></div>
+ <div class="legalTitle">${tr('கடன் ஒப்புதல் கடிதம்','LOAN SANCTION LETTER')}</div>
+ <p>${tr('அன்பார்ந்த வாடிக்கையாளர்','Dear Customer')},</p>
+ <p>${tr('உங்கள் கடன் விண்ணப்பம் கீழ்க்கண்ட விதிமுறைகளின் அடிப்படையில் ஒப்புதல் பெறுகிறது.','Your loan has been sanctioned subject to the following particulars and agreed terms.')}</p>
+ <table class="legalTable"><tr><td>${tr('வாடிக்கையாளர் பெயர்','Customer Name')}</td><td><b>${p.name||''}</b></td></tr><tr><td>${tr('முகவரி','Address')}</td><td>${p.address||''}</td></tr><tr><td>${tr('கடன் தொகை','Sanctioned Amount')}</td><td><b>${money(x.amount)}</b></td></tr><tr><td>${tr('வட்டி விகிதம்','Interest Rate')}</td><td><b>${x.rate}%</b></td></tr><tr><td>${tr('தவணை வகை','Repayment Type')}</td><td><b>${x.cycle==='weekly'?tr('வாராந்திர','Weekly'):tr('மாதாந்திர','Monthly')}</b></td></tr><tr><td>${tr('மொத்த தவணைகள்','Total Dues')}</td><td><b>${x.period}</b></td></tr><tr><td>${tr('ஒவ்வொரு தவணை தொகை','Per Installment')}</td><td><b>${money(loanInstallment(x))} / ${x.cycle==='monthly'?tr('மாதம்','Month'):tr('வாரம்','Week')}</b></td></tr><tr><td>${tr('செலுத்திய தவணைகள்','Paid Dues')}</td><td><b>${paid} / ${x.period}</b></td></tr><tr><td>${tr('மீதமுள்ள தவணைகள்','Remaining Dues')}</td><td><b>${remaining}</b></td></tr><tr><td>${tr('தொடக்க தேதி','Start Date')}</td><td>${x.start}</td></tr><tr><td>${tr('இறுதி Due / Close தேதி','Final Due / Close Date')}</td><td><b>${x.due}</b></td></tr><tr><td>${tr('தற்போதைய நிலுவை','Outstanding Due')}</td><td><b>${money(outstanding)}</b></td></tr><tr><td>${tr('கணக்கிடப்பட்ட வட்டி*','Calculated Interest*')}</td><td>${money(interest)}</td></tr><tr><td>${tr('மொத்தம்*','Calculated Total*')}</td><td><b>${money(total)}</b></td></tr></table>
+ <p>${tr('மேலே குறிப்பிடப்பட்ட விவரங்கள் வாடிக்கையாளர் மற்றும் நிதி நிறுவனத்திற்கிடையிலான ஒப்பந்தம் மற்றும் பொருந்தும் சட்ட விதிமுறைகளுக்கு உட்பட்டவை.','The above particulars are subject to the agreement between the customer and the finance company and applicable law.')}</p>
+ <p><b>${tr('குறிப்பு:','Note:')}</b> ${tr('இது தனியார் நிதி நிறுவனத்தின் ஆவணம். இது அரசு ஆவணம் அல்லது அரசு Letterhead அல்ல.','This is a private finance document and is not a Government document or Government letterhead.')}</p>
+ <div class="legalSign"><div class="signbox">${tr('கடன் பெற்றவர் கையொப்பம்','Borrower Signature')}<br><br>________________</div><div class="signbox">${tr('Nominee கையொப்பம்','Nominee Signature')}<br><br>________________</div><div class="signbox">${tr('Owner கையொப்பம்','Owner Signature')}<br><br>________________</div></div>
+ <div class="legalNote">${tr('இந்த ஆவணம் கணினி மூலம் உருவாக்கப்பட்டது. இறுதி விதிமுறைகள் கையெழுத்திட்ட ஒப்பந்தத்தால் நிர்ணயிக்கப்படும்.','Computer-generated document. Final terms are governed by the signed agreement.')}</div>
+ </div>`;
+}
+function printSanction(){let x=document.getElementById('sanctionLetter');if(!x){renderSanction();x=document.getElementById('sanctionLetter')}if(x){printArea.innerHTML=x.outerHTML;window.print()}}
+function waitForPDFLibraries(timeout=10000){
+  return new Promise(resolve=>{
+    const start=Date.now();
+    (function check(){
+      if(window.jspdf && window.html2canvas)return resolve(true);
+      if(Date.now()-start>timeout)return resolve(false);
+      setTimeout(check,100);
+    })();
+  });
+}
+async function downloadElementPDF(el,filename,orientation='portrait',format='a4'){
+  if(!el)return false;
+  const ok=await waitForPDFLibraries();
+  if(!ok){
+    alert('PDF library load ஆகவில்லை. Print / View → Save as PDF பயன்படுத்தவும்.');
+    return false;
+  }
+  try{
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation,unit:'mm',format});
+    await pdf.html(el,{
+      x:0,y:0,
+      width:orientation==='landscape'?297:210,
+      windowWidth:Math.max(el.scrollWidth||794,794),
+      margin:0,
+      autoPaging:'text',
+      html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff'},
+      callback:doc=>doc.save(filename)
+    });
+    return true;
+  }catch(err){
+    console.error('PDF generation failed:',err);
+    alert('PDF உருவாக்க முடியவில்லை. Print / View → Save as PDF பயன்படுத்தவும்.');
+    return false;
+  }
+}
+async function downloadSanctionPDF(){
+  let x=document.getElementById('sanctionLetter');
+  if(!x){renderSanction();x=document.getElementById('sanctionLetter')}
+  if(!x)return;
+  await downloadElementPDF(x,'Loan_Sanction_Letter_'+Date.now()+'.pdf','portrait','a4');
+}
+// defaults
+document.getElementById('eDate').value=today();document.getElementById('ePeriod').value=36;document.getElementById('pDate').value=today();document.getElementById('depDate').value=today();document.getElementById('lStart').value=today();suggestDueDate();suggestEntryDueDate();calcLoanInstallment();calcEntryInstallment();
+statementModeChanged();
+/* Production sessions are restored by the Supabase Auth listener below. */
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" onerror="this.remove();var s=document.createElement('script');s.src='https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js';document.head.appendChild(s);"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" onerror="this.remove();var s=document.createElement('script');s.src='https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js';document.head.appendChild(s);"></script>
+<script>setTimeout(()=>setLang(localStorage.getItem(LANG_KEY)||'ta'),0);</script>
+
+<script>
+function openCustomerStatement(){
+ normalizeDB(); const m=document.getElementById('customerStmtModal'); if(!m){alert('Customer Statement module not found');return;}
+ const sel=document.getElementById('csParty'); sel.innerHTML='<option value="">Select Customer</option>'+(db.parties||[]).map(p=>'<option value="'+p.id+'">'+esc(p.name||'')+' - '+esc(p.phone||'')+'</option>').join('');
+ document.getElementById('csLoan').innerHTML='<option value="">All Loans</option>'; sel.onchange=()=>{const pid=sel.value;document.getElementById('csLoan').innerHTML='<option value="">All Loans</option>'+(db.loans||[]).filter(l=>l.partyId===pid).map(l=>'<option value="'+l.id+'">'+l.id+' - ₹'+Number(l.amount||0).toLocaleString('en-IN')+'</option>').join('')}; m.style.display='flex';
+}
+function closeCustomerStatement(){const m=document.getElementById('customerStmtModal');if(m)m.style.display='none'}
+function buildCustomerStatement(){const pid=document.getElementById('csParty').value;if(!pid){alert('Select customer');return} normalizeDB();const p=db.parties.find(x=>x.id===pid)||{};const lid=document.getElementById('csLoan').value;const from=document.getElementById('csFrom').value,to=document.getElementById('csTo').value;const loans=(db.loans||[]).filter(l=>l.partyId===pid&&(!lid||l.id===lid));let rows=[];loans.forEach(l=>rows.push([l.start||'', 'Loan / Credit', l.id, Number(l.amount||0),0,'Loan Disbursement']));(db.payments||[]).filter(x=>x.partyId===pid&&(!lid||x.loanId===lid)).forEach(x=>rows.push([x.date||'','Repayment',x.loanId||'',0,Number(x.amount||0),x.note||'Repayment']));rows=rows.filter(r=>(!from||r[0]>=from)&&(!to||r[0]<=to)).sort((a,b)=>String(a[0]).localeCompare(String(b[0])));const loan=loans.reduce((a,l)=>a+Number(l.amount||0),0),paid=rows.reduce((a,r)=>a+r[4],0),payable=loans.reduce((a,l)=>a+Number(loanTotal(l)||l.total||l.amount||0),0);let h='<div class="cs-summary"><div class="cs-card"><b>Total Loan</b><br>₹'+loan.toLocaleString('en-IN')+'</div><div class="cs-card"><b>Total Payable</b><br>₹'+payable.toLocaleString('en-IN')+'</div><div class="cs-card"><b>Total Paid</b><br>₹'+paid.toLocaleString('en-IN')+'</div><div class="cs-card"><b>Outstanding</b><br>₹'+Math.max(0,payable-paid).toLocaleString('en-IN')+'</div></div><h3>'+esc(p.name||'')+'</h3><p>Phone: '+esc(p.phone||'-')+'</p><table class="cs-table"><tr><th>Date</th><th>Type</th><th>Loan ID</th><th>Loan</th><th>Paid</th><th>Details</th></tr>';rows.forEach(r=>h+='<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td><td>₹'+r[3].toLocaleString('en-IN')+'</td><td>₹'+r[4].toLocaleString('en-IN')+'</td><td>'+esc(r[5])+'</td></tr>');document.getElementById('customerStmtOutput').innerHTML=h+'</table>'}
+function downloadCustomerCSV(){buildCustomerStatement();const el=document.getElementById('customerStmtOutput');if(!el.innerText)return;const lines=[...el.querySelectorAll('tr')].map(tr=>[...tr.children].map(td=>'"'+td.innerText.replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines],{type:'text/csv;charset=utf-8'}));a.download='Customer_Statement_'+Date.now()+'.csv';a.click()}
+function printCustomerStatement(){buildCustomerStatement();const w=window.open('','_blank');if(!w){alert('Popup blocked. Allow popups for this app.');return}const content=document.getElementById('customerStmtOutput').innerHTML;w.document.write(`<!doctype html><html><head><title>Customer Statement</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #999;padding:7px}</style></head><body>${content}</body></html>`);w.document.close();setTimeout(()=>w.print(),300)}
+async function downloadCustomerPDF(){
+  buildCustomerStatement();
+  const el=document.getElementById('customerStmtOutput');
+  if(!el||!el.innerText.trim())return;
+  const wrapper=document.createElement('div');
+  wrapper.style.cssText='background:#fff;color:#111;padding:12mm;width:190mm;font-family:Arial,sans-serif;';
+  wrapper.innerHTML='<h2 style="text-align:center">Customer Statement</h2>'+el.innerHTML;
+  document.body.appendChild(wrapper);
+  try{
+    await downloadElementPDF(wrapper,'Customer_Statement_'+Date.now()+'.pdf','portrait','a4');
+  }finally{
+    wrapper.remove();
+  }
+}
+/* Normalized Supabase sync layer. Settings API URL is retained only for backward compatibility. */
+function startAutoSync(){
+  clearInterval(window.__smfAutoSync);
+  // Realtime is primary. 10-minute safety refresh only.
+  if(!supabaseSession||appMode==='test')return;
+  window.__smfAutoSync=setInterval(
+    ()=>loadNormalizedFromSupabase().then(ok=>{if(ok)refresh();}),
+    600000
+  );
+}
+
+function startLiveChannel(){
+  if(!supabaseSession||appMode==='test')return;
+
+  try{
+    if(window.__smfChannel)
+      supabaseClient.removeChannel(window.__smfChannel);
+
+    const tables=[
+      'parties','credit_entries','payments','payment_slips',
+      'bills','loans','deposits','finance_settings'
+    ];
+
+    let channel=supabaseClient.channel('smf-live-data');
+
+    tables.forEach(table=>{
+      channel=channel.on(
+        'postgres_changes',
+        {event:'*',schema:'public',table},
+        payload=>{
+          console.log('Realtime change:',table,payload.eventType);
+          clearTimeout(window.__smfLiveTimer);
+          window.__smfLiveTimer=setTimeout(async()=>{
+            try{
+              const ok=await loadNormalizedFromSupabase();
+              if(ok)refresh();
+              setSyncStatus(ok?'🟢 Live / Real-time connected':'🔴 Live refresh failed');
+            }catch(e){
+              console.error(e);
+              setSyncStatus('🔴 Realtime refresh failed');
+            }
+          },350);
+        }
+      );
+    });
+
+    window.__smfChannel=channel;
+
+    channel.subscribe(status=>{
+      console.log('Supabase Realtime:',status);
+      if(status==='SUBSCRIBED'){
+        setSyncStatus('🟢 Supabase Realtime connected');
+      }else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){
+        setSyncStatus('🟠 Realtime reconnecting…');
+      }
+    });
+
+  }catch(e){
+    console.warn('Realtime channel unavailable',e);
+    setSyncStatus('🟠 Realtime unavailable');
+  }
+}
+
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+  console.log('Auth event:',event);
+  if(event==='SIGNED_OUT'){
+    if(window.__smfChannel)supabaseClient.removeChannel(window.__smfChannel);
+    window.__smfChannel=null;
+    supabaseSession=null;
+    current=null;
+    remoteReady=false;
+  }
+});
+function syncNow(){return syncNormalizedToSupabase()}
+function pullOnlineData(silent=false){return loadNormalizedFromSupabase().then(ok=>{if(ok){refresh();setSyncStatus('🟢 Latest Supabase data loaded')}else if(!silent)alert('Supabase data load failed')})}
+// Restore a Supabase Auth session after page refresh.
+(async function(){
+  try{
+    const {data}=await supabaseClient.auth.getSession(); supabaseSession=data.session;
+    if(supabaseSession){
+      appMode='production';localStorage.setItem(MODE_KEY,'production');db=getDBForMode('production');
+      if(await ensureRemoteState('production')){
+        const prof=db.users.find(x=>x.id===supabaseSession.user.id);
+        current=prof?{...prof,u:prof.username||supabaseSession.user.email,email:supabaseSession.user.email}:{id:supabaseSession.user.id,u:supabaseSession.user.email,role:'Staff',access:[],email:supabaseSession.user.email};
+        if(!prof) throw new Error('User profile not found. Create/activate the user profile in Supabase.');
+        localStorage.setItem('smf_logged_user',current.u);document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';document.getElementById('who').textContent=(current.email||current.u)+' • '+current.role;document.getElementById('modeBadge').textContent='🔒 PRODUCTION';document.getElementById('testBanner').style.display='none';document.getElementById('staffMenu').style.display=current.role==='Owner'?'block':'none';applyAccess();refresh();showPage('dashboard');startAutoSync();startLiveChannel();
+      }
+    }
+  }catch(e){console.error('Session restore failed:',e)}
+})();
+</script>
+</body></html>
