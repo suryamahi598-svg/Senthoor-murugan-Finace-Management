@@ -236,7 +236,7 @@ body{min-height:100vh;touch-action:pan-y;overscroll-behavior-x:none;}
 .tablewrap{max-width:100%;overflow-x:auto!important;overflow-y:hidden;touch-action:pan-x pan-y;}
 @media(max-width:700px){main{width:100%!important;margin-left:0!important}.page{width:100%!important;overflow-x:hidden!important}}
 </style>
-<link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="theme-color" content="#8b0000"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));}</script></head>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="theme-color" content="#8b0000"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><script>if("serviceWorker" in navigator){window.addEventListener("load",async()=>{try{const regs=await navigator.serviceWorker.getRegistrations();for(const r of regs)await r.unregister();if(window.caches){const ks=await caches.keys();for(const k of ks)await caches.delete(k);}}catch(e){console.warn("Service worker cleanup",e);}});}</script></head>
 <body>
 
 <div id="login" class="login">
@@ -442,6 +442,7 @@ body{min-height:100vh;touch-action:pan-y;overscroll-behavior-x:none;}
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
 <button class="yellow" onclick="saveApi()">Save API URL</button>
 <button class="primary" onclick="syncNow()">🔄 Sync Now</button>
+<button class="primary" onclick="migrateLocalDataToFirebase()">☁️ Upload Existing Local Data</button>
 <button class="muted" onclick="pullOnlineData()">☁️ Pull Online Data</button>
 </div>
 <div id="syncStatus" class="small" style="margin-top:8px">Offline / Local Storage</div>
@@ -1273,6 +1274,46 @@ function startLiveChannel(){
   const settingsUnsub=firestore.collection('finance_settings').doc('1').onSnapshot(()=>queueFirebaseRefresh(),err=>console.warn('Firebase settings realtime error',err));
   firebaseUnsubs.push(settingsUnsub);
   setSyncStatus('🟢 Firebase Live / Real-time connected');
+}
+async function migrateLocalDataToFirebase(){
+  if(!firebaseUser)return alert('Please sign in with Firebase first / முதலில் Firebase login செய்யவும்');
+  if(!current||!['Owner','Developer'].includes(current.role))return alert('Owner / Developer only');
+  if(appMode==='test')return alert('Switch to Production mode first');
+  normalizeDB();
+  const uid=currentUserId();
+  const packs={
+    parties:(db.parties||[]).map(x=>({id:x.id,name:x.name||'',address:x.address||null,phone:x.phone||null,aadhaar_number:x.aadhaar||null,account_number:x.account||null,nominee_name:x.nominee||null,nominee_address:x.naddress||null,nominee_phone:x.nphone||null,created_by:x.created_by||uid})),
+    credit_entries:(db.entries||[]).map(x=>({id:x.id,party_id:x.partyId||x.party,amount:safeNum(x.amount),rate:safeNum(x.rate),cycle:x.cycle||'monthly',period:safeNum(x.period),entry_date:x.date||today(),due_date:x.due||null,notes:x.note||null,created_by:x.created_by||uid})),
+    loans:(db.loans||[]).map(x=>({id:x.id,party_id:x.partyId||x.party,amount:safeNum(x.amount),rate:safeNum(x.rate),cycle:x.cycle||'monthly',period:Number(x.period||0),start_date:x.start||today(),due_date:x.due||null,closed:!!x.closed,notes:x.note||x.notes||null,source_entry_id:x.sourceEntryId||null,created_by:x.created_by||uid})),
+    payments:(db.payments||[]).map(x=>({id:x.id,party_id:x.partyId||x.party,loan_id:x.loanId||null,amount:safeNum(x.amount),payment_date:x.date||today(),payment_method:x.method||null,payment_type:x.type||null,reference_number:x.reference||null,notes:x.note||null,created_by:x.created_by||uid})),
+    payment_slips:(db.slips||[]).map(x=>({id:x.id,party_id:x.partyId||x.party,payment_id:x.paymentId||null,slip_number:x.slipNumber||String(x.id),amount:safeNum(x.amount),slip_date:x.date||today(),notes:x.note||null,created_by:x.created_by||uid})),
+    bills:(db.bills||[]).map(x=>({id:x.id,party_id:x.partyId||x.party||null,bill_number:x.billNumber||String(x.id),bill_date:x.date||today(),amount:safeNum(x.amount),bill_type:x.billType||'General',details:x.details||{},created_by:x.created_by||uid})),
+    deposits:(db.deposits||[]).map(x=>({id:x.id||crypto.randomUUID(),amount:safeNum(x.amount),deposit_date:x.date||today(),bank:x.bank||null,notes:x.note||null,created_by:x.created_by||uid}))
+  };
+  const total=Object.values(packs).reduce((n,a)=>n+a.length,0);
+  if(!total)return alert('No local finance data found / Local data இல்லை');
+  if(!confirm('Existing data will be uploaded to Firebase and merged by record ID. Continue?\n\nTotal records: '+total))return;
+  try{
+    setSyncStatus('☁️ Uploading existing data…');
+    for(const [table,rows] of Object.entries(packs)){
+      for(let i=0;i<rows.length;i+=400){
+        const batch=firestore.batch();
+        rows.slice(i,i+400).forEach(row=>batch.set(firestore.collection(table).doc(String(row.id)),firestoreValue(row),{merge:true}));
+        await batch.commit();
+      }
+    }
+    const st=db.settings||{};
+    await firestore.collection('finance_settings').doc('1').set(firestoreValue({id:1,finance_name_ta:st.ta||'செந்தூர் முருகன் ஃபைனான்ஸ்',finance_name_en:st.en||'Senthoor Murugan Finance',address:st.address||null,phone:st.phone||null,updated_by:uid}),{merge:true});
+    remoteReady=true;
+    await loadNormalizedFromFirebase();
+    refresh();
+    setSyncStatus('🟢 Existing data uploaded to Firebase');
+    alert('Upload completed successfully! / பழைய data Firebase server-க்கு upload ஆகிவிட்டது.\n\nNow the same data can be opened from another mobile.');
+  }catch(err){
+    console.error('Local-to-Firebase migration failed:',err);
+    setSyncStatus('🔴 Upload failed');
+    alert('Upload failed / Upload தோல்வி\n\n'+(err.message||err));
+  }
 }
 function syncNow(){return syncNormalizedToFirebase()}
 function pullOnlineData(silent=false){return loadNormalizedFromFirebase().then(ok=>{if(ok){refresh();setSyncStatus('🟢 Latest Firebase data loaded')}else if(!silent)alert('Firebase data load failed')})}
